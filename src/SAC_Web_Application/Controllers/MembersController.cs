@@ -58,7 +58,6 @@ namespace SAC_Web_Application.Controllers
                 ViewData["SubName"] = sub.Item;
                 ViewData["SubID"] = sub.SubID;
             }
-
             return View();
         }
 
@@ -68,28 +67,24 @@ namespace SAC_Web_Application.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind
-            ("MemberID,Identifier,memberList,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
+            ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
             Members members
             /*, IServiceProvider serviceProvider*/) //for adding to member role
         {
-            List<Members> memberList = new List<Members>();
-            var str = HttpContext.Session.GetString("memberList");            
-            if (str != null)
-            {
-                var obj = JsonConvert.DeserializeObject<List<Members>>(str);
-                memberList = (obj);
-            }
-
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
             var userEmail = User.FindFirstValue(ClaimTypes.Name);
 
+            // GET THE CHOSEN SUBSCRIPTION ID AND STORE TO A VARIABLE FOR FUTURE USE
+            int subNum = members.Identifier;
+
+            //CREATE A LIST TO STORE THE ATHLETE DETAILS
+            List<Members> memberList = new List<Members>();
+
+            //ADD USER EMAIL ADDRESS TO THE 1ST MEMBER
             members.Email = userEmail;
-            // addional columns that must be added
+            // ADDITIONAL COLUMNS THAT MUST BE POPULATED
             members.MembershipPaid = false;
             members.DateRegistered = DateTime.Now;
-
-            int subNum = members.Identifier;
-            //int viewCount;
 
             //for adding to member role
             //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -98,41 +93,122 @@ namespace SAC_Web_Application.Controllers
             {
                 if (subNum == 1 || subNum == 2 || subNum == 3)
                 {
-                    members.Email = userEmail;
-                    // addional columns that must be added
-                    members.MembershipPaid = false;
-                    members.DateRegistered = DateTime.Now;
-
                     _context.Add(members);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
                 }
+                else
+                {
+                    MemberListToSession(members, memberList);
+                    return RedirectToAction("Create2", "Members", new { subId = subNum });
+                }
+                //for adding to member role
+                /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
+                if (user1 != null)
+                {
+                    await userManager.AddToRolesAsync(user1, new string[] { "Member" });
+                }*/
+            }
+            // If we got this far, something failed, redisplay form
+            return View(members);
+        }
+
+        // GET: Members/Create2
+        public IActionResult Create2(int? subId)
+        {
+            if (subId != null)
+            {
+                var sub = _context.Subscriptions.Where(s => s.SubID == subId).First();
+                ViewData["SubName"] = sub.Item;
+                ViewData["SubID"] = sub.SubID;
+            }
+            return View();
+        }
+
+        // POST: Members/Create2
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create2([Bind
+            ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
+            Members members
+            /*, IServiceProvider serviceProvider*/) //for adding to member role
+        {
+            // GET THE CHOSEN SUBSCRIPTION ID AND STORE TO A VARIABLE FOR FUTURE USE
+            int subNum = members.Identifier;
+
+            //CREATE A LIST TO STORE THE ATHLETE DETAILS
+            List<Members> memberList = new List<Members>();
+
+            // RETRIEVE THE LIST OF MEMBERS FROM SESSION IF IT CONTAINS DATA
+            //CONVERT FROM JSON AND CREATE A LIST OF MEMBERS WITH IT
+            var str = HttpContext.Session.GetString("memberList");
+            if (str != null)
+            {
+                var obj = JsonConvert.DeserializeObject<List<Members>>(str);
+                memberList = (obj);
+            }
+
+            // THESE COLUMNS POPULATED VIA THE USER DETAILS (ATHELETE 1)
+            members.Address1 = memberList.ElementAt(0).Address1;
+            members.Address2 = memberList.ElementAt(0).Address2;
+            members.City = memberList.ElementAt(0).City;
+            members.County = memberList.ElementAt(0).County;
+            members.PostCode = memberList.ElementAt(0).PostCode;
+            members.Province = memberList.ElementAt(0).Province;            
+            members.MembershipPaid = false;
+            members.DateRegistered = DateTime.Now;
+            
+            //for adding to member role
+            //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            if (ModelState.IsValid)
+            {
                 if (subNum == 4 || subNum == 7 || subNum == 12)
                 {
-                    memberList.Add(members);                    
-                    var memList = JsonConvert.SerializeObject (memberList);                    
-                    HttpContext.Session.SetString("memberList", memList);
+                    MemberListToSession(members, memberList);
 
                     if (memberList.Count == 2)
                     {
-                        foreach (Members member in memberList)
-                        {
-                            _context.Add(member);
-                        }
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction("Index");
+                        return await UpdateDBLoop(memberList);
                     }
                     else
-                        return RedirectToAction("Create", "Members", new { subId = subNum});
+                        return RedirectToAction("Create", "Members", new { subId = subNum });
+                }
+                if (subNum == 5 || subNum == 8 || subNum == 10)
+                {
+                    MemberListToSession(members, memberList);
+
+                    if (memberList.Count == 3)
+                    {
+                        return await UpdateDBLoop(memberList);
+                    }
+                    else
+                        return RedirectToAction("Create2", "Members", new { subId = subNum });
                 }
 
-                    //for adding to member role
-                    /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
-                    if (user1 != null)
+                if (subNum == 6 || subNum == 9 || subNum == 11)
+                {
+                    MemberListToSession(members, memberList);
+
+                    if (memberList.Count == 4)
                     {
-                        await userManager.AddToRolesAsync(user1, new string[] { "Member" });
-                    }*/
+                        return await UpdateDBLoop(memberList);
+                    }
+                    else
+                        return RedirectToAction("Create2", "Members", new { subId = subNum });
+                }
+
+                //for adding to member role
+                /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
+                if (user1 != null)
+                {
+                    await userManager.AddToRolesAsync(user1, new string[] { "Member" });
+                }*/
 
                 //await _context.SaveChangesAsync();
-               // return RedirectToAction("Index");
+                // return RedirectToAction("Index");
 
             }
 
@@ -140,23 +216,23 @@ namespace SAC_Web_Application.Controllers
             return View(members);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public PartialViewResult _Create([Bind
-            ("MemberID,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
-            Members member1
-            /*, IServiceProvider serviceProvider*/)
+        private async Task<IActionResult> UpdateDBLoop(List<Members> memberList)
         {
-            return PartialView(new Members()
+            foreach (Members member in memberList)
             {
-                Address1 = member1.Address1,
-                Address2 = member1.Address2,
-                PostCode = member1.PostCode,
-                County = member1.County,
-                City = member1.City,
-                Province = member1.Province
-            });
-        }        
+                _context.Add(member);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        private void MemberListToSession(Members members, List<Members> memberList)
+        {
+            memberList.Add(members);
+            var memList = JsonConvert.SerializeObject(memberList);
+            HttpContext.Session.SetString("memberList", memList);
+        }
+
 
         // GET: Members/Edit/5
         public async Task<IActionResult> Edit(int? id)

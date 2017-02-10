@@ -8,9 +8,10 @@ using SAC_Web_Application.Models.ClubModel;
 namespace SAC_Web_Application.Data.ClubMigrations
 {
     [DbContext(typeof(ClubContext))]
-    partial class ClubContextModelSnapshot : ModelSnapshot
+    [Migration("20170210150346_UpdateMemberModel")]
+    partial class UpdateMemberModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -87,7 +88,8 @@ namespace SAC_Web_Application.Data.ClubMigrations
                     b.Property<int>("MemberID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address1");
+                    b.Property<string>("Address1")
+                        .IsRequired();
 
                     b.Property<string>("Address2");
 
@@ -118,15 +120,14 @@ namespace SAC_Web_Application.Data.ClubMigrations
 
                     b.Property<bool>("MembershipPaid");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired();
+                    b.Property<string>("PhoneNumber");
 
                     b.Property<string>("PostCode");
 
-                    b.Property<string>("Province");
-
-                    b.Property<string>("TeamName")
+                    b.Property<string>("Province")
                         .IsRequired();
+
+                    b.Property<string>("TeamName");
 
                     b.HasKey("MemberID");
 

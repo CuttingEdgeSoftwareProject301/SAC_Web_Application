@@ -5,9 +5,7 @@
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
       "type": "platform"
-    },
-    "Microsoft.Extensions.Caching.Memory": "1.0.0", //for using session
-    "Microsoft.AspNetCore.Session": "1.0.0", //for using session
+    },    
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",

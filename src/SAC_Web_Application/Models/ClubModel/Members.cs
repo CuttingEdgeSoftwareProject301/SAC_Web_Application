@@ -24,21 +24,19 @@ namespace SAC_Web_Application.Models.ClubModel
         public string LastName { get; set; }
         [Required]
         public DateTime DOB { get; set; }
-        public string Gender { get; set; }
         [Required]
+        public string Gender { get; set; }        
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        [Required]
         public string City { get; set; }
-        [Required]
         public string County { get; set; }
         public string PostCode { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        [Required]
         public string TeamName { get; set; }
         [Required]
         public string CountyOfBirth { get; set; }
-        [Required]
         public string Province { get; set; }
         public bool MembershipPaid { get; set; }
         //[Required]
