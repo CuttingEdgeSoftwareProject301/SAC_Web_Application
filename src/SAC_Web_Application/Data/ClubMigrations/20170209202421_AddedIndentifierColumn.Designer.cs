@@ -8,9 +8,10 @@ using SAC_Web_Application.Models.ClubModel;
 namespace SAC_Web_Application.Data.ClubMigrations
 {
     [DbContext(typeof(ClubContext))]
-    partial class ClubContextModelSnapshot : ModelSnapshot
+    [Migration("20170209202421_AddedIndentifierColumn")]
+    partial class AddedIndentifierColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

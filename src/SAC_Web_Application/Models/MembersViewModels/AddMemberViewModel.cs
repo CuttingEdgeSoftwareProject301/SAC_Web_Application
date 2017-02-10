@@ -11,6 +11,10 @@ namespace SAC_Web_Application.Models.MembersViewModels
     public class AddMemberViewModel
     {
         [Required]
+        [Display(Name = "Identifier")]
+        public int Identifier { get; set; }
+
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

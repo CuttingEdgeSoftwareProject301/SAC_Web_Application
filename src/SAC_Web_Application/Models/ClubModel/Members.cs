@@ -11,7 +11,10 @@ namespace SAC_Web_Application.Models.ClubModel
     public class Members
     {
         [Key]
-        public int MemberID { get; set; }        
+        public int MemberID { get; set; }
+
+        public int Identifier { get; set; }
+
         public string Email { get; set; }
         [Column(TypeName = "date")]
         public DateTime DateRegistered { get; set; }

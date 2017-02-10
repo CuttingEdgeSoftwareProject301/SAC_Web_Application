@@ -10,6 +10,9 @@ using System.Security.Claims;
 using SAC_Web_Application.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using SAC_Web_Application.Models.MembersViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 //Members Controller
 namespace SAC_Web_Application.Controllers
@@ -17,7 +20,7 @@ namespace SAC_Web_Application.Controllers
     public class MembersController : Controller
     {
         private ClubContext _context;
-
+        
         public MembersController(ClubContext context)
         {
             _context = context;    
@@ -65,34 +68,71 @@ namespace SAC_Web_Application.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind
-            ("MemberID,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
+            ("MemberID,Identifier,memberList,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
             Members members
             /*, IServiceProvider serviceProvider*/) //for adding to member role
         {
+            List<Members> memberList = new List<Members>();
+            var str = HttpContext.Session.GetString("memberList");            
+            if (str != null)
+            {
+                var obj = JsonConvert.DeserializeObject<List<Members>>(str);
+                memberList = (obj);
+            }
+
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
             var userEmail = User.FindFirstValue(ClaimTypes.Name);
+
+            members.Email = userEmail;
+            // addional columns that must be added
+            members.MembershipPaid = false;
+            members.DateRegistered = DateTime.Now;
+
+            int subNum = members.Identifier;
+            //int viewCount;
 
             //for adding to member role
             //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             if (ModelState.IsValid)
             {
-                members.Email = userEmail;
-                // addional columns that must be added
-                members.MembershipPaid = false;
-                members.DateRegistered = DateTime.Now;
-
-                _context.Add(members);
-
-                //for adding to member role
-                /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
-                if (user1 != null)
+                if (subNum == 1 || subNum == 2 || subNum == 3)
                 {
-                    await userManager.AddToRolesAsync(user1, new string[] { "Member" });
-                }*/
+                    members.Email = userEmail;
+                    // addional columns that must be added
+                    members.MembershipPaid = false;
+                    members.DateRegistered = DateTime.Now;
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                    _context.Add(members);
+                }
+                if (subNum == 4 || subNum == 7 || subNum == 12)
+                {
+                    memberList.Add(members);                    
+                    var memList = JsonConvert.SerializeObject (memberList);                    
+                    HttpContext.Session.SetString("memberList", memList);
+
+                    if (memberList.Count == 2)
+                    {
+                        foreach (Members member in memberList)
+                        {
+                            _context.Add(member);
+                        }
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        return RedirectToAction("Create", "Members", new { subId = subNum});
+                }
+
+                    //for adding to member role
+                    /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
+                    if (user1 != null)
+                    {
+                        await userManager.AddToRolesAsync(user1, new string[] { "Member" });
+                    }*/
+
+                //await _context.SaveChangesAsync();
+               // return RedirectToAction("Index");
 
             }
 
