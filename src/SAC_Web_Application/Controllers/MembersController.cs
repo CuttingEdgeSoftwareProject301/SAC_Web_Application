@@ -27,18 +27,26 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+            ViewData["NameSortParm"] = sortOrder == "FirstName" ? "firstName_desc" : "FirstName";
+            ViewData["CurrentFilter"] = searchString;
+
             var members = from m in _context.Members
                           select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                members = members.Where(m => m.LastName.Contains(searchString)
+                || m.FirstName.Contains(searchString));
+
+            }
             switch (sortOrder)
             {
                 case "lastName_desc":
                     members = members.OrderByDescending(m => m.LastName);
                     break;
-                case "firstName_desc":
+                case "FirstName":
                     members = members.OrderByDescending(m => m.FirstName);
                     break;
                 default:

@@ -15,6 +15,19 @@
     <div class="panel-heading">
         <strong>Member List</strong>
     </div>
+
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color form-inline">
+            <br />
+            <p style="font-weight: bold" class="col-md-offset-1">
+                Search by Name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-xs btn-primary" />
+                <a asp-action="Index" class="btn btn-xs btn-primary">Reset List</a>
+            </p>
+        </div>
+    </form>
+
+
     <table class="table table-condensed table-hover table-responsive">
         <thead>
             <tr>
