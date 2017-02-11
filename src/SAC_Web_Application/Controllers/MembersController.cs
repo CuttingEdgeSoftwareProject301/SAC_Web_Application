@@ -27,9 +27,28 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Members.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+            var members = from m in _context.Members
+                          select m;
+            switch (sortOrder)
+            {
+                case "lastName_desc":
+                    members = members.OrderByDescending(m => m.LastName);
+                    break;
+                case "firstName_desc":
+                    members = members.OrderByDescending(m => m.FirstName);
+                    break;
+                default:
+                    members = members.OrderBy(m => m.LastName);
+                    break;
+            }
+            return View(await members.AsNoTracking().ToListAsync());
+
+
+            //return View(await _context.Members.ToListAsync());
         }
 
         // GET: Members/Details/5

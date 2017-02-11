@@ -19,10 +19,14 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm">@Html.DisplayNameFor(model => model.FirstName)</a>
+
+                    @*@Html.DisplayNameFor(model => model.FirstName)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.LastName)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSortParm">@Html.DisplayNameFor(model => model.LastName)</a>
+
+                    @*@Html.DisplayNameFor(model => model.LastName)*@
                 </th>
                 @*<th>
                         @Html.DisplayNameFor(model => model.DOB)
