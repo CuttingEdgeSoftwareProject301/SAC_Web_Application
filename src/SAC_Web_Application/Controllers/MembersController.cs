@@ -27,10 +27,17 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
             ViewData["NameSortParm"] = sortOrder == "FirstName" ? "firstName_desc" : "FirstName";
+
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
             ViewData["CurrentFilter"] = searchString;
 
             var members = from m in _context.Members
@@ -39,7 +46,6 @@ namespace SAC_Web_Application.Controllers
             {
                 members = members.Where(m => m.LastName.Contains(searchString)
                 || m.FirstName.Contains(searchString));
-
             }
             switch (sortOrder)
             {
@@ -53,10 +59,9 @@ namespace SAC_Web_Application.Controllers
                     members = members.OrderBy(m => m.LastName);
                     break;
             }
-            return View(await members.AsNoTracking().ToListAsync());
 
-
-            //return View(await _context.Members.ToListAsync());
+            int pageSize = 10;
+            return View(await PaginatedList<Members>.CreateAsync(members.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Members/Details/5
