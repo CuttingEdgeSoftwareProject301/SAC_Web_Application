@@ -30,8 +30,8 @@ namespace SAC_Web_Application.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
-            ViewData["NameSortParm"] = sortOrder == "FirstName" ? "firstName_desc" : "FirstName";
+            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
+            ViewData["FirstNameSortParm"] = sortOrder == "FirstName" ? "firstName_desc" : "FirstName";
 
             if (searchString != null)
                 page = 1;
@@ -53,6 +53,9 @@ namespace SAC_Web_Application.Controllers
                     members = members.OrderByDescending(m => m.LastName);
                     break;
                 case "FirstName":
+                    members = members.OrderBy(m => m.FirstName);
+                    break;
+                case "firstName_desc":
                     members = members.OrderByDescending(m => m.FirstName);
                     break;
                 default:
