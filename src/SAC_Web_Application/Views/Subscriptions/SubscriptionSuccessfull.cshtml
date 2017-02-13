@@ -4,11 +4,10 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" >
-    <input type="text" name="cmd" value="_xclick">
-    <input type="text" name="hosted_button_id" value="FAEYPC989E9EW">
+    <input type="hidden" name="cmd" value="_xclick">
     <input type="text" name="tx" value="TransactionID">
-    <input type="text" name="auth_amount" />
-    <input type="text" name="at" value="HkBMRugkvz7GxtSvl8yBciTkB-vsZ8zeghQlsO4b7zGM_UOt18-UIMU-_yq">
+    <input type="hidden" name="auth_amount" />
+    <input type="hidden" name="at" value="HkBMRugkvz7GxtSvl8yBciTkB-vsZ8zeghQlsO4b7zGM_UOt18-UIMU-_yq">
     <input type="submit" value="PDT">
 </form>
 

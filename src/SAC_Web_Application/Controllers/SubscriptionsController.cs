@@ -152,5 +152,21 @@ namespace SAC_Web_Application.Controllers
         {
             return _context.Subscriptions.Any(e => e.SubID == id);
         }
-    }
+
+        //[HttpPost, ActionName("SubscriptionSuccessfull")]
+        //[ValidateAntiForgeryToken]
+        //public void SubscriptionSuccessfull()
+        //{
+        //    var loaded = Views.Subscriptions.SubscriptionSuccessfull.cshtml;
+        //    if (!loaded.IsPostBack)
+        //    {
+
+                //string TransactionID = Request.QueryString.Get("tx");
+            //string Status = Request.QueryString.Get("st");
+
+            //string OrderID = Request.QueryString.Get("ID");
+            // }
+            
+    //}
+}
 }
