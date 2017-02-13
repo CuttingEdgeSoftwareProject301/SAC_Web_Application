@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SAC_Web_Application.Models.ClubModel;
 
 namespace SAC_Web_Application.Models.MembersViewModels
 {
@@ -39,6 +40,8 @@ namespace SAC_Web_Application.Models.MembersViewModels
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
+        public SelectList GenderList { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Address 1")]
@@ -58,6 +61,7 @@ namespace SAC_Web_Application.Models.MembersViewModels
         [DataType(DataType.Text)]
         [Display(Name = "County")]
         public string County { get; set; }
+        public SelectList CountyList { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
@@ -68,6 +72,7 @@ namespace SAC_Web_Application.Models.MembersViewModels
         [DataType(DataType.Text)]
         [Display(Name = "Province")]
         public string Province { get; set; }
+        public SelectList ProvinceList { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

@@ -4,6 +4,11 @@
     ViewData["Title"] = "Subscriptions";
 
     int subID = (int)(ViewData["SubID"]);
+
+    // get drop down list data
+    SelectList ddlGenders = (SelectList)ViewData["Genders"];
+    SelectList ddlCounties = (SelectList)ViewData["Counties"];
+    SelectList ddlProvinces = (SelectList)ViewData["Provinces"];
 }
 
 <h2>Subscription Form</h2>
@@ -44,24 +49,10 @@
                 <span asp-validation-for="DOB" class="text-danger" />
             </div>
         </div>
-        <!--<div class="form-group">
-            <label asp-for="Gender" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select-- <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Male</a></li>
-                    <li><a href="#">Female</a></li>
-                </ul>
-            </div>
-            <span asp-validation-for="Gender" class="text-danger"></span>
-        </div>-->
         <div class="form-group">
             <label asp-for="Gender" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger" />
+                <select asp-for="Gender" asp-items="@ddlGenders" class="form-control"></select>
             </div>
         </div>
         <div class="form-group">
@@ -85,56 +76,10 @@
                 <span asp-validation-for="PostCode" class="text-danger" />
             </div>
         </div>
-        <!--Commented drop down list for now since nothing gets selected-->
-
-        <!--<div class="form-group">
-            <label asp-for="County" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select-- <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Antrim</a></li>
-                    <li><a href="#">Armagh</a></li>
-                    <li><a href="#">Carlow</a></li>
-                    <li><a href="#">Cavan</a></li>
-                    <li><a href="#">Clare</a></li>
-                    <li><a href="#">Cork</a></li>
-                    <li><a href="#">Derry</a></li>
-                    <li><a href="#">Donegal</a></li>
-                    <li><a href="#">Down</a></li>
-                    <li><a href="#">Dublin</a></li>
-                    <li><a href="#">Fermanagh</a></li>
-                    <li><a href="#">Galway</a></li>
-                    <li><a href="#">Kerry</a></li>
-                    <li><a href="#">Kildare</a></li>
-                    <li><a href="#">Kilkenny</a></li>
-                    <li><a href="#">Laois</a></li>
-                    <li><a href="#">Leitrim</a></li>
-                    <li><a href="#">Limerick</a></li>
-                    <li><a href="#">Longford</a></li>
-                    <li><a href="#">Louth</a></li>
-                    <li><a href="#">Mayo</a></li>
-                    <li><a href="#">Meath</a></li>
-                    <li><a href="#">Monaghan</a></li>
-                    <li><a href="#">Offaly</a></li>
-                    <li><a href="#">Roscommon</a></li>
-                    <li><a href="#">Sligo</a></li>
-                    <li><a href="#">Tipperary</a></li>
-                    <li><a href="#">Tyrone</a></li>
-                    <li><a href="#">Waterford</a></li>
-                    <li><a href="#">Westmeath</a></li>
-                    <li><a href="#"> Wexford</a></li>
-                    <li><a href="#"> Wicklow</a></li>
-                </ul>
-            </div>
-            <span asp-validation-for="County" class="text-danger"></span>
-        </div>-->
         <div class="form-group">
             <label asp-for="County" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="County" class="form-control" />
-                <span asp-validation-for="County" class="text-danger" />
+                <select asp-for="County" asp-items="@ddlCounties" class="form-control"></select>
             </div>
         </div>
         <div class="form-group">
@@ -144,76 +89,16 @@
                 <span asp-validation-for="City" class="text-danger" />
             </div>
         </div>
-        <!--<div class="form-group">
-            <label asp-for="Province" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select-- <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Connaught</a></li>
-                    <li><a href="#">Leinster</a></li>
-                    <li><a href="#">Munster</a></li>
-                    <li><a href="#">Ulster</a></li>
-                </ul>
-                <span asp-validation-for="Province" class="text-danger"></span>
-            </div>
-        </div>-->
         <div class="form-group">
             <label asp-for="Province" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Province" class="form-control" />
-                <span asp-validation-for="Province" class="text-danger" />
+                <select asp-for="Province" asp-items="@ddlProvinces" class="form-control"></select>
             </div>
         </div>
-        <!--<div class="form-group">
-            <label asp-for="CountyOfBirth" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select-- <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Antrim</a></li>
-                    <li><a href="#">Armagh</a></li>
-                    <li><a href="#">Carlow</a></li>
-                    <li><a href="#">Cavan</a></li>
-                    <li><a href="#">Clare</a></li>
-                    <li><a href="#">Cork</a></li>
-                    <li><a href="#">Derry</a></li>
-                    <li><a href="#">Donegal</a></li>
-                    <li><a href="#">Down</a></li>
-                    <li><a href="#">Dublin</a></li>
-                    <li><a href="#">Fermanagh</a></li>
-                    <li><a href="#">Galway</a></li>
-                    <li><a href="#">Kerry</a></li>
-                    <li><a href="#">Kildare</a></li>
-                    <li><a href="#">Kilkenny</a></li>
-                    <li><a href="#">Laois</a></li>
-                    <li><a href="#">Leitrim</a></li>
-                    <li><a href="#">Limerick</a></li>
-                    <li><a href="#">Longford</a></li>
-                    <li><a href="#">Louth</a></li>
-                    <li><a href="#">Mayo</a></li>
-                    <li><a href="#">Meath</a></li>
-                    <li><a href="#">Monaghan</a></li>
-                    <li><a href="#">Offaly</a></li>
-                    <li><a href="#">Roscommon</a></li>
-                    <li><a href="#">Sligo</a></li>
-                    <li><a href="#">Tipperary</a></li>
-                    <li><a href="#">Tyrone</a></li>
-                    <li><a href="#">Waterford</a></li>
-                    <li><a href="#">Westmeath</a></li>
-                    <li><a href="#"> Wexford</a></li>
-                    <li><a href="#"> Wicklow</a></li>
-                </ul>
-                <span asp-validation-for="CountyOfBirth" class="text-danger"></span>
-            </div>
-        </div>-->
         <div class="form-group">
             <label asp-for="CountyOfBirth" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="CountyOfBirth" class="form-control" />
-                <span asp-validation-for="CountyOfBirth" class="text-danger" />
+                <select asp-for="CountyOfBirth" asp-items="@ddlCounties" class="form-control"></select>
             </div>
         </div>
         <div class="form-group">

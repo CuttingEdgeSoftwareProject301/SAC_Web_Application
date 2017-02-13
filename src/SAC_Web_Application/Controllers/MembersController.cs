@@ -93,6 +93,15 @@ namespace SAC_Web_Application.Controllers
                 ViewData["SubName"] = sub.Item;
                 ViewData["SubID"] = sub.SubID;
             }
+
+            // retrieve data for drop down lists
+            var genders = _context.Genders.Select(g => new { Id = g.GenderID, Value = g.GenderName });
+            ViewData["Genders"] = new SelectList(genders, "Id", "Value");
+            var counties = _context.Counties.Select(c => new { Id = c.CountyID, Value = c.CountyName });
+            ViewData["Counties"] = new SelectList(counties, "Id", "Value");
+            var provinces = _context.Provinces.Select(p => new { Id = p.ProvinceID, Value = p.ProvinceName });
+            ViewData["Provinces"] = new SelectList(provinces, "Id", "Value");
+
             return View();
         }
 
@@ -106,6 +115,23 @@ namespace SAC_Web_Application.Controllers
             Members members
             /*, IServiceProvider serviceProvider*/) //for adding to member role
         {
+            // Query the database with values of drop down lists to get the text
+            // Get the gender name and assign to member
+            int genderId = Convert.ToInt32(members.Gender);
+            var gender = _context.Genders.Where(g => g.GenderID == genderId).First();
+            members.Gender = gender.GenderName;
+            // Get the province name and assign to member
+            int provinceId = Convert.ToInt32(members.Province);
+            var province = _context.Provinces.Where(p => p.ProvinceID == provinceId).First();
+            members.Province = province.ProvinceName;
+            // Get the county name and assign to member
+            int countyId = Convert.ToInt32(members.County);
+            int countyOfBirthId = Convert.ToInt32(members.CountyOfBirth);
+            var county = _context.Counties.Where(c => c.CountyID == countyId).First();
+            var countyOfBirth = _context.Counties.Where(c => c.CountyID == countyOfBirthId).First();
+            members.County = county.CountyName;
+            members.CountyOfBirth = countyOfBirth.CountyName;
+
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
             var userEmail = User.FindFirstValue(ClaimTypes.Name);
 
@@ -157,6 +183,13 @@ namespace SAC_Web_Application.Controllers
                 ViewData["SubName"] = sub.Item;
                 ViewData["SubID"] = sub.SubID;
             }
+
+            // retrieve data for drop down lists
+            var genders = _context.Genders.Select(g => new { Id = g.GenderID, Value = g.GenderName });
+            ViewData["Genders"] = new SelectList(genders, "Id", "Value");
+            var counties = _context.Counties.Select(c => new { Id = c.CountyID, Value = c.CountyName });
+            ViewData["Counties"] = new SelectList(counties, "Id", "Value");
+
             return View();
         }
 
@@ -170,6 +203,16 @@ namespace SAC_Web_Application.Controllers
             Members members
             /*, IServiceProvider serviceProvider*/) //for adding to member role
         {
+            // Query the database with values of drop down lists to get the text
+            // Get the gender name and assign to member
+            int genderId = Convert.ToInt32(members.Gender);
+            var gender = _context.Genders.Where(g => g.GenderID == genderId).First();
+            members.Gender = gender.GenderName;
+            // Get the county name and assign to member
+            int countyOfBirthId = Convert.ToInt32(members.CountyOfBirth);
+            var countyOfBirth = _context.Counties.Where(c => c.CountyID == countyOfBirthId).First();
+            members.CountyOfBirth = countyOfBirth.CountyName;
+
             // GET THE CHOSEN SUBSCRIPTION ID AND STORE TO A VARIABLE FOR FUTURE USE
             int subNum = members.Identifier;
 

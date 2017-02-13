@@ -23,6 +23,9 @@ namespace SAC_Web_Application.Models.ClubModel
         public DbSet<Committee> Committees { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<County> Counties { get; set; }
+        public DbSet<Gender> Genders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
