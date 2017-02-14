@@ -158,7 +158,9 @@ namespace SAC_Web_Application.Controllers
             if (Request.Query["tx"] != "")
             {
                 string TransactionID = Request.Query["tx"];
-                ViewData["Message"] = TransactionID;
+                string amount = Reqeust.Query["amt"];
+                ViewData["Message"] = "Paypal Reference" + TransactionID;
+                ViewData["Message2"] = "Amount Paid  {0:c}" + amount;
             }
             return View();
         }
