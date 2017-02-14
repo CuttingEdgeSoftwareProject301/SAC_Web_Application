@@ -152,6 +152,16 @@ namespace SAC_Web_Application.Controllers
         {
             return _context.Subscriptions.Any(e => e.SubID == id);
         }
+        public IActionResult SubscriptionSuccessfull()
+        {
+            
+            if (Request.Query["tx"] != "")
+            {
+                string TransactionID = Request.Query["tx"];
+                ViewData["Message"] = TransactionID;
+            }
+            return View();
+        }
 
         //[HttpPost, ActionName("SubscriptionSuccessfull")]
         //[ValidateAntiForgeryToken]
@@ -165,7 +175,7 @@ namespace SAC_Web_Application.Controllers
         //        string TransactionID = Request.Query["tx"];
         //        Console.Write(TransactionID);
         //    }
-            
+
         // }
     }
 }

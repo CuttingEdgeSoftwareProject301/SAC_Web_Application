@@ -451,12 +451,7 @@ namespace SAC_Web_Application.Controllers
                 return View(model);
             }
         }
-        public IActionResult SubscriptionSuccessfull()
-        {
-            ViewData["Message"] = "Payment Complete";
-
-            return View();
-        }
+        
         #region Helpers
 
         private void AddErrors(IdentityResult result)
