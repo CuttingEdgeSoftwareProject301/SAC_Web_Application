@@ -153,19 +153,19 @@ namespace SAC_Web_Application.Controllers
             return _context.Subscriptions.Any(e => e.SubID == id);
         }
 
-        [HttpPost, ActionName("SubscriptionSuccessfull")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("SubscriptionSuccessfull")]
+        //[ValidateAntiForgeryToken]
 
-        public void SubscriptionSuccessfull()
-        {
-            //var loaded = Views.Subscriptions.SubscriptionSuccessfull.cshtml;
-            //if (!loaded.IsPostBack) && 
-            if(Request.Query["tx"] != "")
-            {
-                string TransactionID = Request.Query["tx"];
-                Console.Write(TransactionID);
-            }
+        //public void SubscriptionSuccessfull()
+        //{
+        //    //var loaded = Views.Subscriptions.SubscriptionSuccessfull.cshtml;
+        //    //if (!loaded.IsPostBack) && 
+        //    if(Request.Query["tx"] != "")
+        //    {
+        //        string TransactionID = Request.Query["tx"];
+        //        Console.Write(TransactionID);
+        //    }
             
-         }
+        // }
     }
 }
