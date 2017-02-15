@@ -152,11 +152,17 @@ namespace SAC_Web_Application.Controllers
 
             if (ModelState.IsValid)
             {
+                // SUBNUM 1,2 & 3 RELATE TO SINGLE PERSON SUBSCRIPTIONS
                 if (subNum == 1 || subNum == 2 || subNum == 3)
                 {
                     _context.Add(members);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    //_context.SaveChanges();
+                    //memberList.Add(members);
+                    MemberListToSession(members, memberList);
+
+                    return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
+                    //return RedirectToAction("Index");
                 }
                 else
                 {
@@ -243,6 +249,7 @@ namespace SAC_Web_Application.Controllers
 
             if (ModelState.IsValid)
             {
+                // SUBNUM 4, 7 & 12 RELATE TO 2 PERSON SUBSCRIPTIONS
                 if (subNum == 4 || subNum == 7 || subNum == 12)
                 {
                     MemberListToSession(members, memberList);
@@ -254,6 +261,7 @@ namespace SAC_Web_Application.Controllers
                     else
                         return RedirectToAction("Create", "Members", new { subId = subNum });
                 }
+                // SUBNUM 5, 8 & 10 RELATE TO 3 PERSON SUBSCRIPTIONS
                 if (subNum == 5 || subNum == 8 || subNum == 10)
                 {
                     MemberListToSession(members, memberList);
@@ -265,7 +273,7 @@ namespace SAC_Web_Application.Controllers
                     else
                         return RedirectToAction("Create2", "Members", new { subId = subNum });
                 }
-
+                // SUBNUM 6 ,9 & 11 RELATE TO 4 PERSON SUBSCRIPTIONS
                 if (subNum == 6 || subNum == 9 || subNum == 11)
                 {
                     MemberListToSession(members, memberList);
@@ -296,12 +304,16 @@ namespace SAC_Web_Application.Controllers
 
         private async Task<IActionResult> UpdateDBLoop(List<Members> memberList)
         {
+            List<Members> newMemberList = new List<Members>();
             foreach (Members member in memberList)
             {
+                //ADD MEMBER TO DB THEN ADD IT TO SESSION AFTER IT HAS AN ID
                 _context.Add(member);
+                await _context.SaveChangesAsync();                
+                MemberListToSession(member, newMemberList);                
             }
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
         }
 
         private void MemberListToSession(Members members, List<Members> memberList)

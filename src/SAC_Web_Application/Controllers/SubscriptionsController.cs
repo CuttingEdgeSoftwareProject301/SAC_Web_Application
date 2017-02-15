@@ -158,19 +158,23 @@ namespace SAC_Web_Application.Controllers
         // GET: SubscriptionSuccessfull
         public IActionResult SubscriptionSuccessfull()
         {
-            
+
             if (Request.Query["tx"] != "")
             {
-                string TransactionID = Request.Query["tx"];
-                string amount = Request.Query["amt"];
+                //string TransactionID = Request.Query["tx"];
+                //string amount = Request.Query["amt"];
 
-                Payment payment = new Payment();              
+                string TransactionID = "TX_TEST_2PEEPS";
+                string amount = "40.00";
+
+                Payment payment = new Payment();
 
                 payment.PaymentID = TransactionID;
                 payment.Amount = amount;
                 payment.CreateTime = DateTime.Now;
 
                 _context.Add(payment);
+                _context.SaveChanges();
 
                 //CREATE A LIST TO STORE THE ATHLETE DETAILS
                 List<Members> memberList = new List<Members>();
@@ -190,12 +194,14 @@ namespace SAC_Web_Application.Controllers
                     memPay.PaymentID = TransactionID;
                     //member.MembershipPaid = true; **TRY THIS WITH A TRIGGER
                     _context.Add(memPay);
-                    
-                }               
+                    _context.SaveChanges();
+
+                }
 
                 ViewData["Message"] = string.Format("Paypal Reference", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid {0:c}", amount);
             }
+            //return RedirectToAction("Index", "Members");
             return View();
         }
 
