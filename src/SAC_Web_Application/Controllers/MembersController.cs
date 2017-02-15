@@ -301,7 +301,8 @@ namespace SAC_Web_Application.Controllers
                 _context.Add(member);
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
         }
 
         private void MemberListToSession(Members members, List<Members> memberList)

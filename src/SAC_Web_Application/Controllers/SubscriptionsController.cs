@@ -164,6 +164,10 @@ namespace SAC_Web_Application.Controllers
                 string TransactionID = Request.Query["tx"];
                 string amount = Request.Query["amt"];
 
+                //string TransactionID = "XXXXXX";
+                //string amount = "66.00";
+
+
                 Payment payment = new Payment();              
 
                 payment.PaymentID = TransactionID;
@@ -171,9 +175,10 @@ namespace SAC_Web_Application.Controllers
                 payment.CreateTime = DateTime.Now;
 
                 _context.Add(payment);
+                _context.SaveChanges();
 
                 //CREATE A LIST TO STORE THE ATHLETE DETAILS
-                List<Members> memberList = new List<Members>();
+                /*List<Members> memberList = new List<Members>();
 
                 var str = HttpContext.Session.GetString("memberList");
                 if (str != null)
@@ -191,7 +196,7 @@ namespace SAC_Web_Application.Controllers
                     //member.MembershipPaid = true; **TRY THIS WITH A TRIGGER
                     _context.Add(memPay);
                     
-                }               
+                }*/           
 
                 ViewData["Message"] = string.Format("Paypal Reference", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid {0:c}", amount);
