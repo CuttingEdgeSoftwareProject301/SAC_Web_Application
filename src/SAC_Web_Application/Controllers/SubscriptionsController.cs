@@ -198,8 +198,8 @@ namespace SAC_Web_Application.Controllers
                     
                 }*/           
 
-                ViewData["Message"] = string.Format("Paypal Reference", TransactionID);
-                ViewData["Message2"] = string.Format("Amount Paid {0:c}", amount);
+                ViewData["Message"] = string.Format("Paypal Reference: {0}", TransactionID);
+                ViewData["Message2"] = string.Format("Amount Paid: {0:c}", amount);
             }
             return View();
         }
