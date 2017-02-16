@@ -164,7 +164,7 @@ namespace SAC_Web_Application.Controllers
                 //string TransactionID = Request.Query["tx"];
                 //string amount = Request.Query["amt"];
 
-                string TransactionID = "TX_TEST_2PEEPS";
+                string TransactionID = "TX_TEST_3PEEPS";
                 string amount = "40.00";
 
                 Payment payment = new Payment();
@@ -192,13 +192,13 @@ namespace SAC_Web_Application.Controllers
                 {
                     memPay.MemberID = member.MemberID;
                     memPay.PaymentID = TransactionID;
-                    //member.MembershipPaid = true; **TRY THIS WITH A TRIGGER
+                    //member.MembershipPaid = true; //**TRY THIS WITH A TRIGGER
                     _context.Add(memPay);
                     _context.SaveChanges();
 
                 }
 
-                ViewData["Message"] = string.Format("Paypal Reference", TransactionID);
+                ViewData["Message"] = string.Format("Paypal Reference {0}", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid {0:c}", amount);
             }
             //return RedirectToAction("Index", "Members");
