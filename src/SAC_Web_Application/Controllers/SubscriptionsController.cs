@@ -161,11 +161,11 @@ namespace SAC_Web_Application.Controllers
 
             if (Request.Query["tx"] != "")
             {
-                //string TransactionID = Request.Query["tx"];
-                //string amount = Request.Query["amt"];
+                string TransactionID = Request.Query["tx"];
+                string amount = Request.Query["amt"];
 
-                string TransactionID = "TX_TEST_3PEEPS";
-                string amount = "40.00";
+                //string TransactionID = "TX_TEST_3PEEPS";
+                //string amount = "40.00";
 
                 Payment payment = new Payment();
 
@@ -199,25 +199,16 @@ namespace SAC_Web_Application.Controllers
                 }
 
                 ViewData["Message"] = string.Format("Paypal Reference {0}", TransactionID);
-                ViewData["Message2"] = string.Format("Amount Paid {0:c}", amount);
+                ViewData["Message2"] = string.Format("Amount Paid ${0:c}", amount);
             }
             //return RedirectToAction("Index", "Members");
             return View();
         }
 
-        //[HttpPost, ActionName("SubscriptionSuccessfull")]
-        //[ValidateAntiForgeryToken]
-
-        //public void SubscriptionSuccessfull()
-        //{
-        //    //var loaded = Views.Subscriptions.SubscriptionSuccessfull.cshtml;
-        //    //if (!loaded.IsPostBack) && 
-        //    if(Request.Query["tx"] != "")
-        //    {
-        //        string TransactionID = Request.Query["tx"];
-        //        Console.Write(TransactionID);
-        //    }
-
-        // }
+        // GET: Subscriptions
+        public IActionResult PayNow()
+        {
+            return View();
+        }
     }
 }

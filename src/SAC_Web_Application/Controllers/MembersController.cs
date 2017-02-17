@@ -161,7 +161,8 @@ namespace SAC_Web_Application.Controllers
                     //memberList.Add(members);
                     MemberListToSession(members, memberList);
 
-                    return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
+                    return RedirectToAction("PayNow", "Subscriptions");
+                    //return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
                     //return RedirectToAction("Index");
                 }
                 else
@@ -313,7 +314,8 @@ namespace SAC_Web_Application.Controllers
                 MemberListToSession(member, newMemberList);                
             }
             //return RedirectToAction("Index");
-            return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
+            return RedirectToAction("PayNow", "Subscriptions");
+            //return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
         }
 
         private void MemberListToSession(Members members, List<Members> memberList)
