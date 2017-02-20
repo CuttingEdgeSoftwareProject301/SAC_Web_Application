@@ -1,0 +1,60 @@
+@using SAC_Web_Application.Models.ClubModel
+
+@model SAC_Web_Application.Models.ClubModel.Events
+
+@{
+    ViewData["Title"] = "Details";
+
+    List<Members> membersAttending = (List<Members>)ViewData["MembersAttending"];
+    List<Members> membersNotAttending = (List<Members>)ViewData["MembersNotAttending"];
+
+}
+
+<h3>@Html.DisplayFor(model => model.EventTitle)</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+    </dl>
+</div>
+
+@if (membersAttending.Count != 0)
+{
+    <div id="MembersAttending">
+        @Html.Partial("~/Views/Events/_MembersAttending.cshtml", membersAttending)
+    </div>
+}
+
+@if (membersNotAttending.Count != 0)
+{
+    <div id="MembersNotAttending">
+        @Html.Partial("~/Views/Events/_MembersNotAttending.cshtml", membersNotAttending)
+    </div>
+}
+
+@*<div id="MembersNotAttending">
+    @Html.Partial("~/Views/Members/_MemberEvents.cshtml", membersAttending)
+</div>*@
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EventID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -44,5 +44,6 @@ namespace SAC_Web_Application.Models.ClubModel
         //public string PaymentID { get; set; }
 
         public List<MemberPayment> MemberPayments { get; set; }
+        public List<MemberEvent> MemberEvents { get; set; }
     }
 }

@@ -1,0 +1,61 @@
+@model IEnumerable<SAC_Web_Application.Models.ClubModel.Events>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Club Events</h2>
+
+<p>
+    <a asp-controller="Events" asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Event List</strong>
+    </div>
+
+    <table class="table table-hover table-responsive table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EventTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.EventID" class="btn btn-primary btn-xs">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning btn-xs">Edit</a> 
+                        <a asp-action="Delete" asp-route-id="@item.EventID" class="btn btn-danger btn-xs">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

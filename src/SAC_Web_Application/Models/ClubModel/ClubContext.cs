@@ -26,6 +26,8 @@ namespace SAC_Web_Application.Models.ClubModel
         public DbSet<Province> Provinces { get; set; }
         public DbSet<County> Counties { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<Events> Events { get; set; }
+        public DbSet<MemberEvent> MemberEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,6 +61,22 @@ namespace SAC_Web_Application.Models.ClubModel
                 .HasOne(cq => cq.qualifications)
                 .WithMany(q => q.coachQualifications)
                 .HasForeignKey(cq => cq.QualID);
+
+            #endregion
+            #region Member Events link table
+
+            modelBuilder.Entity<MemberEvent>()
+                .HasKey(me => new { me.MemberID, me.EventID });
+
+            modelBuilder.Entity<MemberEvent>()
+            .HasOne(me => me.member)
+            .WithMany(m => m.MemberEvents)
+            .HasForeignKey(me => me.MemberID);
+
+            modelBuilder.Entity<MemberEvent>()
+                .HasOne(me => me.eventt)
+                .WithMany(e => e.MemberEvents)
+                .HasForeignKey(me => me.EventID);
 
             #endregion
         }

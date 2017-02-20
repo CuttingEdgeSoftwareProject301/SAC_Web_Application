@@ -12,8 +12,12 @@ namespace SAC_Web_Application.Models.ClubModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EventID { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Description { get; set; }
+        [Display(Name ="Event Name")]
+        public string EventTitle { get; set; }
+        public DateTime Date { get; set; }
+        public string Category { get; set; }
+        public string Location { get; set; }
+
+        public List<MemberEvent> MemberEvents { get; set; }
     }
 }

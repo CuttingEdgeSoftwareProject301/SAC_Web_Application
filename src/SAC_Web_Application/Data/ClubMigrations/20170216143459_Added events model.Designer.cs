@@ -8,9 +8,10 @@ using SAC_Web_Application.Models.ClubModel;
 namespace SAC_Web_Application.Data.ClubMigrations
 {
     [DbContext(typeof(ClubContext))]
-    partial class ClubContextModelSnapshot : ModelSnapshot
+    [Migration("20170216143459_Added events model")]
+    partial class Addedeventsmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -86,11 +87,11 @@ namespace SAC_Web_Application.Data.ClubMigrations
 
                     b.Property<string>("Category");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("EndDate");
 
                     b.Property<string>("EventTitle");
 
-                    b.Property<string>("Location");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("EventID");
 
@@ -107,21 +108,6 @@ namespace SAC_Web_Application.Data.ClubMigrations
                     b.HasKey("GenderID");
 
                     b.ToTable("Genders");
-                });
-
-            modelBuilder.Entity("SAC_Web_Application.Models.ClubModel.MemberEvent", b =>
-                {
-                    b.Property<int>("MemberID");
-
-                    b.Property<int>("EventID");
-
-                    b.HasKey("MemberID", "EventID");
-
-                    b.HasIndex("EventID");
-
-                    b.HasIndex("MemberID");
-
-                    b.ToTable("MemberEvent");
                 });
 
             modelBuilder.Entity("SAC_Web_Application.Models.ClubModel.MemberPayment", b =>
@@ -271,19 +257,6 @@ namespace SAC_Web_Application.Data.ClubMigrations
                     b.HasOne("SAC_Web_Application.Models.ClubModel.Qualifications", "qualifications")
                         .WithMany("coachQualifications")
                         .HasForeignKey("QualID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SAC_Web_Application.Models.ClubModel.MemberEvent", b =>
-                {
-                    b.HasOne("SAC_Web_Application.Models.ClubModel.Events", "eventt")
-                        .WithMany("MemberEvents")
-                        .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SAC_Web_Application.Models.ClubModel.Members", "member")
-                        .WithMany("MemberEvents")
-                        .HasForeignKey("MemberID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
