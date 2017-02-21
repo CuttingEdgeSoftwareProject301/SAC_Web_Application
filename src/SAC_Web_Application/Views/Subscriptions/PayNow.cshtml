@@ -1,0 +1,37 @@
+@*@model IEnumerable<SAC_Web_Application.Models.ClubModel.Subscription>*@
+
+@{
+    ViewData["Title"] = "PayNow";
+}
+
+<h2>PayNow</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="FAEYPC989E9EW">
+    <table>
+        <tr><td><input type="hidden" name="on0" value="Options">Options</td></tr>
+        <tr>
+            <td>
+                <select name="os0">
+                    <option value="Senior/Master">Senior/Master €40.00 EUR</option>
+                    <option value="1 Junior">1 Junior €15.00 EUR</option>
+                    <option value="2 Juniors">2 Juniors €30.00 EUR</option>
+                    <option value="3 Juniors">3 Juniors €45.00 EUR</option>
+                    <option value="Adult + 1 Junior">Adult + 1 Junior €55.00 EUR</option>
+                    <option value="Adult + 1 Junior">Adult + 1 Junior €60.00 EUR</option>
+                    <option value="Family">Family €70.00 EUR</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="currency_code" value="EUR">
+    <input type="image" src="https://www.sandbox.paypal.com/en_US/GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
