@@ -31,9 +31,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span>Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About"><span class="glyphicon glyphicon-bullhorn"></span>About Us</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About"><span class="glyphicon glyphicon-bullhorn"></span>The Committee</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact"><span class="glyphicon glyphicon-envelope"></span>Contact</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Information"><span class="glyphicon glyphicon-pencil"></span>Information</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Information"><span class="glyphicon glyphicon-pencil"></span>Information</a></li>*@
                     <li><a asp-area="" asp-controller="Events" asp-action="Index"><span class="glyphicon glyphicon-calendar"></span>Events</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Gallery"><span class="glyphicon glyphicon-camera"></span>Gallery</a></li>
 
@@ -71,28 +71,26 @@
                     <div class="col-md-3">
                         <div class="footerFormat">
                             <p style="font-size:24px;">Information</p>
+                           
+                            
                             <a runat="server" asp-controller="Home" asp-action="About" style="color:white;">About Us</a><br>
                             <a runat="server" href="~/" style="color:white;">News</a><br>
-                            <a runat="server" asp-controller="Home" asp-action="Information" style="color:white;">Information</a><br>
+                            @*<a runat="server" asp-controller="Home" asp-action="Information" style="color:white;">Information</a><br>*@
                             <a runat="server" href="~/" style="color:white;">Gallery</a><br>
                             <a runat="server" asp-controller="Home" asp-action="Contact" style="color:white;">Contact US</a><br>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="footerFormat">
-                            <p style="font-size:24px;">Events</p>
+                            <p style="font-size:24px;">Records</p>
                             <a runat="server" href="~/" style="color:white;">Results</a><br>
-                            <a runat="server" href="~/" style="color:white;">Register</a><br>
-                            <a runat="server" href="~/" style="color:white;">Login</a><br>
+                            <a  runat="server"asp-area="" asp-controller="Events" asp-action="Index" style="color:white;">Current Events</a><br>
                             <a runat="server" href="http://www.athleticsireland.ie/" style="color:white;">Athletics Ireland</a><br>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="footerFormat">
                             <p style="font-size:24px;">Useful Information</p>
-                            <a runat="server" href="https://www.facebook.com/SouthSligoAthletic/" style="color:white;">South Sligo AC on </a><br>
-                            <a runat="server" href="https://www.facebook.com/North-Sligo-Athletic-Club-104088472984492/" style="color:white;">North Sligo AC</a><br>
-                            <a runat="server" href="https://www.facebook.com/corranac" style="color:white;">Corran AC</a><br>
                             <a runat="server" href="https://www.facebook.com/sligoroad.league" style="color:white;">Sligo Road Race League</a><br>
                             <a runat="server" href="http://www.sligotriathlon.ie/" style="color:white;">Sligo Triathlon Club</a><br>
                             <a runat="server" href="http://www.warriorsfestival.com/" style="color:white;">Warriors Run</a><br>
@@ -103,7 +101,7 @@
                     <div class="col-md-3">
                         <p style="font-size:24px;">Our Sponsors</p>
                         <img class="img-responsive" src="~/images/Amcor.jpeg" style="width:18em; height:7em;" />
-                        <img class="img-responsive" src="~/images/SligoCU.png" style="width:18em; height:7em;" />
+                        @*<img class="img-responsive" src="~/images/SligoCU.png" style="width:18em; height:7em;" />*@
                     </div>
                 </div>
 
