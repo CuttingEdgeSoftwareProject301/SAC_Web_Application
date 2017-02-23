@@ -8,16 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using SAC_Web_Application.Models.ClubModel;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using SAC_Web_Application.Models;
 
 namespace SAC_Web_Application.Controllers
 {
     public class SubscriptionsController : Controller
     {
         private ClubContext _context;
+        private UserManager<ApplicationUser> _userManager;
 
-        public SubscriptionsController(ClubContext context)
+        public SubscriptionsController(ClubContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
 
         // GET: Subscriptions
@@ -156,16 +162,21 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: SubscriptionSuccessfull
-        public IActionResult SubscriptionSuccessfull()
+        public async Task<IActionResult> SubscriptionSuccessfull()
         {
-
             if (Request.Query["tx"] != "")
             {
+                //AddToMemberRole();
+                // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
+                var userEmail = User.FindFirstValue(ClaimTypes.Name);
+                if (userEmail != null)
+                {
+                    ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
+                    await _userManager.AddToRolesAsync(user, new string[] { "Member" });
+                }
+
                 string TransactionID = Request.Query["tx"];
                 string amount = Request.Query["amt"];
-
-                //string TransactionID = "TX_TEST_3PEEPS";
-                //string amount = "40.00";
 
                 Payment payment = new Payment();
 
@@ -192,7 +203,7 @@ namespace SAC_Web_Application.Controllers
                 {
                     memPay.MemberID = member.MemberID;
                     memPay.PaymentID = TransactionID;
-                    //member.MembershipPaid = true; //**TRY THIS WITH A TRIGGER
+                    //MEMBERSHIP PAID COLUMN UPDATED TO TRUE USING A TRIGGER ON MEMBERPAYMENTS TABLE
                     _context.Add(memPay);
                     _context.SaveChanges();
 

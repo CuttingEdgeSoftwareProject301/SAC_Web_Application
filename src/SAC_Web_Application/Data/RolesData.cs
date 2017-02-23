@@ -11,14 +11,8 @@ namespace SAC_Web_Application.Data
 {
     public static class RolesData
     {
-        //private static readonly string[] Roles = new string[] { "Administrator", "Editor", "Subscriber" };
-
         public static async Task SeedRoles(IServiceProvider serviceProvider)
         {
-            //using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-
                 var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                 var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -57,7 +51,6 @@ namespace SAC_Web_Application.Data
                 {
                     await userManager.AddToRolesAsync(user2, new string[] { "Admin" });
                 }
-            //}
         }
     }
 }

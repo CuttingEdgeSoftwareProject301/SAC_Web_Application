@@ -112,8 +112,7 @@ namespace SAC_Web_Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind
             ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
-            Members members
-            /*, IServiceProvider serviceProvider*/) //for adding to member role
+            Members members)
         {
             // Query the database with values of drop down lists to get the text
             // Get the gender name and assign to member
@@ -147,9 +146,6 @@ namespace SAC_Web_Application.Controllers
             members.MembershipPaid = false;
             members.DateRegistered = DateTime.Now;
 
-            //for adding to member role
-            //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
             if (ModelState.IsValid)
             {
                 // SUBNUM 1,2 & 3 RELATE TO SINGLE PERSON SUBSCRIPTIONS
@@ -157,8 +153,6 @@ namespace SAC_Web_Application.Controllers
                 {
                     _context.Add(members);
                     await _context.SaveChangesAsync();
-                    //_context.SaveChanges();
-                    //memberList.Add(members);
                     MemberListToSession(members, memberList);
 
                     return RedirectToAction("PayNow", "Subscriptions");
@@ -170,12 +164,6 @@ namespace SAC_Web_Application.Controllers
                     MemberListToSession(members, memberList);
                     return RedirectToAction("Create2", "Members", new { subId = subNum });
                 }
-                //for adding to member role
-                /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
-                if (user1 != null)
-                {
-                    await userManager.AddToRolesAsync(user1, new string[] { "Member" });
-                }*/
             }
             // If we got this far, something failed, redisplay form
             return View(members);
