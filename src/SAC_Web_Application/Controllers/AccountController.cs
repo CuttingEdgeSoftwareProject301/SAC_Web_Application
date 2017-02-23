@@ -75,9 +75,13 @@ namespace SAC_Web_Application.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    //return RedirectToLocal(returnUrl);
-                    // redirect user to subscriptions page for now
-                    return RedirectToAction(nameof(SubscriptionsController.Index), "Subscriptions");
+                                        
+                    // GET ROLES FOR THIS USER & REDIRECT ACCORDINGLY
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Contains("Member"))
+                        return RedirectToAction(nameof(HomeController.Index), "Home");
+                    else
+                        return RedirectToAction(nameof(SubscriptionsController.Index), "Subscriptions");
                 }
                 if (result.RequiresTwoFactor)
                 {
