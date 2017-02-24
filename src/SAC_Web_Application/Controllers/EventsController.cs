@@ -86,8 +86,30 @@ namespace SAC_Web_Application.Controllers
 
             List<Members> membersNotAttending = memsNotAttend.ToList();
 
+            // Retrieve all members that are attending this event
+            var allMemsAttend =
+                 from member in _context.Members
+                 join memberEvents in _context.MemberEvents
+                 on member.MemberID equals memberEvents.MemberID
+                 where memberEvents.EventID == id
+                 && memberEvents.MemberID == member.MemberID
+                 select new Members
+                 {
+                     MemberID = member.MemberID,
+                     FirstName = member.FirstName,
+                     LastName = member.LastName,
+                     Address1 = member.Address1,
+                     County = member.County,
+                     Gender = member.Gender,
+                     Province = member.Province,
+                     TeamName = member.TeamName
+                 };
+
+            List<Members> allMembersAttending = allMemsAttend.ToList();
+
             ViewData["MembersAttending"] = membersAttending;
             ViewData["MembersNotAttending"] = membersNotAttending;
+            ViewData["AllMembersAttending"] = allMembersAttending;
             ViewData["EventID"] = id;
 
             return View(events);

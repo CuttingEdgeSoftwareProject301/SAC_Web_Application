@@ -7,6 +7,7 @@
 
     List<Members> membersAttending = (List<Members>)ViewData["MembersAttending"];
     List<Members> membersNotAttending = (List<Members>)ViewData["MembersNotAttending"];
+    List<Members> allMembersAttending = (List<Members>)ViewData["AllMembersAttending"];
 
 }
 
@@ -49,6 +50,14 @@
         @Html.Partial("~/Views/Events/_MembersNotAttending.cshtml", membersNotAttending)
     </div>
 }
+
+@if (allMembersAttending.Count != 0)
+{
+    <div id="MembersNotAttending">
+        @Html.Partial("~/Views/Events/_AllMembersAttending.cshtml", allMembersAttending)
+    </div>
+}
+
 
 @*<div id="MembersNotAttending">
     @Html.Partial("~/Views/Members/_MemberEvents.cshtml", membersAttending)
