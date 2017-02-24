@@ -1,7 +1,7 @@
 @model IEnumerable<SAC_Web_Application.Models.ClubModel.Members>
 
 <div class="panel panel-danger">
-    <div class="panel-heading">Members Not Attending</div>
+    <div class="panel-heading">Associated Members Unentered</div>
     <div class="panel-body">
         <table class="table table-hover table-responsive table-condensed">
             <thead>
@@ -57,7 +57,7 @@
                         </td>
                         <td>
                             @*<a asp-action="MemberAttend" asp-route-ids="@item.MemberID" class="btn btn-success btn-xs">Attend</a>*@
-                            @Html.ActionLink("Attend", "MemberAttend", "Events", new { memberID = item.MemberID, eventID = ViewData["EventID"] }, new { @class = "btn btn-success btn-xs" })
+                            @Html.ActionLink("Enter", "MemberAttend", "Events", new { memberID = item.MemberID, eventID = ViewData["EventID"] }, new { @class = "btn btn-success btn-xs" })
                         </td>
                     </tr>
                 }

@@ -6,9 +6,12 @@
 
 <h2>Club Events</h2>
 
-<p>
-    <a asp-controller="Events" asp-action="Create" class="btn btn-success">Create New</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-controller="Events" asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+}
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -50,9 +53,13 @@
                         @Html.DisplayFor(modelItem => item.Category)
                     </td>
                     <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning btn-xs">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.EventID" class="btn btn-danger btn-xs">Delete</a>
+                        }
                         <a asp-action="Details" asp-route-id="@item.EventID" class="btn btn-primary btn-xs">Details</a>
-                        <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning btn-xs">Edit</a> 
-                        <a asp-action="Delete" asp-route-id="@item.EventID" class="btn btn-danger btn-xs">Delete</a>
+                        
                     </td>
                 </tr>
             }

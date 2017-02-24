@@ -1,7 +1,7 @@
 @model IEnumerable<SAC_Web_Application.Models.ClubModel.Members>
 
 <div class="panel panel-success">
-    <div class="panel-heading">Members Attending</div>
+    <div class="panel-heading">Associated Members Entered</div>
     <div class="panel-body">
         <table class="table table-hover table-responsive table-condensed">
             <thead>
@@ -56,7 +56,7 @@
                             @Html.DisplayFor(modelItem => item.TeamName)
                         </td>
                         <td>
-                            @Html.ActionLink("Leave", "MemberLeave", "Events", new { memberID = item.MemberID, eventID = ViewData["EventID"] }, new { @class = "btn btn-danger btn-xs" })
+                            @Html.ActionLink("Withdraw", "MemberLeave", "Events", new { memberID = item.MemberID, eventID = ViewData["EventID"] }, new { @class = "btn btn-danger btn-xs" })
                         </td>
                     </tr>
                 }

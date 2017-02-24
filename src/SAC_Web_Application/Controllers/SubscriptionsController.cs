@@ -167,53 +167,63 @@ namespace SAC_Web_Application.Controllers
             if (Request.Query["tx"] != "")
             {
                 //AddToMemberRole();
-                // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
-                var userEmail = User.FindFirstValue(ClaimTypes.Name);
-                if (userEmail != null)
-                {
-                    ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
-                    await _userManager.AddToRolesAsync(user, new string[] { "Member" });
-                }
+                await AddUserToMemberRole();
 
                 string TransactionID = Request.Query["tx"];
                 string amount = Request.Query["amt"];
 
-                Payment payment = new Payment();
-
-                payment.PaymentID = TransactionID;
-                payment.Amount = amount;
-                payment.CreateTime = DateTime.Now;
-
-                _context.Add(payment);
-                _context.SaveChanges();
-
-                //CREATE A LIST TO STORE THE ATHLETE DETAILS
-                List<Members> memberList = new List<Members>();
-
-                var str = HttpContext.Session.GetString("memberList");
-                if (str != null)
-                {
-                    var obj = JsonConvert.DeserializeObject<List<Members>>(str);
-                    memberList = (obj);
-                }
-
-                MemberPayment memPay = new MemberPayment();
-
-                foreach (Members member in memberList)
-                {
-                    memPay.MemberID = member.MemberID;
-                    memPay.PaymentID = TransactionID;
-                    //MEMBERSHIP PAID COLUMN UPDATED TO TRUE USING A TRIGGER ON MEMBERPAYMENTS TABLE
-                    _context.Add(memPay);
-                    _context.SaveChanges();
-
-                }
+                UpdatePaymentTable(TransactionID, amount);
+                UpdateMemberPaymentsTable(TransactionID);
 
                 ViewData["Message"] = string.Format("Paypal Reference {0}", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid ${0:c}", amount);
             }
             //return RedirectToAction("Index", "Members");
             return View();
+        }
+
+        private void UpdateMemberPaymentsTable(string TransactionID)
+        {
+            //CREATE A LIST TO STORE THE ATHLETE DETAILS
+            List<Members> memberList = new List<Members>();
+            var str = HttpContext.Session.GetString("memberList");
+            if (str != null)
+            {
+                var obj = JsonConvert.DeserializeObject<List<Members>>(str);
+                memberList = (obj);
+            }
+            MemberPayment memPay = new MemberPayment();
+            foreach (Members member in memberList)
+            {
+                memPay.MemberID = member.MemberID;
+                memPay.PaymentID = TransactionID;
+                //MEMBERSHIP PAID COLUMN UPDATED TO TRUE USING A TRIGGER ON MEMBERPAYMENTS TABLE
+                _context.Add(memPay);
+                _context.SaveChanges();
+            }
+        }
+
+        private void UpdatePaymentTable(string TransactionID, string amount)
+        {
+            Payment payment = new Payment();
+
+            payment.PaymentID = TransactionID;
+            payment.Amount = amount;
+            payment.CreateTime = DateTime.Now;
+
+            _context.Add(payment);
+            _context.SaveChanges();
+        }
+
+        private async Task AddUserToMemberRole()
+        {
+            // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);
+            if (userEmail != null)
+            {
+                ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
+                await _userManager.AddToRolesAsync(user, new string[] { "Member" });
+            }
         }
 
         // GET: Subscriptions

@@ -93,7 +93,6 @@ namespace SAC_Web_Application.Controllers
                 ViewData["SubName"] = sub.Item;
                 ViewData["SubID"] = sub.SubID;
             }
-
             // retrieve data for drop down lists
             var genders = _context.Genders.Select(g => new { Id = g.GenderID, Value = g.GenderName });
             ViewData["Genders"] = new SelectList(genders, "Id", "Value");
@@ -159,6 +158,7 @@ namespace SAC_Web_Application.Controllers
                     //return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
                     //return RedirectToAction("Index");
                 }
+                //IF MORE THAN ONE MEMBER BEING REGISTERED GO TO CREATE2 ACTION
                 else
                 {
                     MemberListToSession(members, memberList);
@@ -273,20 +273,8 @@ namespace SAC_Web_Application.Controllers
                     }
                     else
                         return RedirectToAction("Create2", "Members", new { subId = subNum });
-                }
-
-                //for adding to member role
-                /*ApplicationUser user1 = await userManager.FindByEmailAsync(userEmail);
-                if (user1 != null)
-                {
-                    await userManager.AddToRolesAsync(user1, new string[] { "Member" });
-                }*/
-
-                //await _context.SaveChangesAsync();
-                // return RedirectToAction("Index");
-
+                }                
             }
-
             // If we got this far, something failed, redisplay form
             return View(members);
         }
