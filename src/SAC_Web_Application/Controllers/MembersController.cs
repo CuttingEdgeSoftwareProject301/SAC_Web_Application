@@ -289,9 +289,7 @@ namespace SAC_Web_Application.Controllers
                 await _context.SaveChangesAsync();                
                 MemberListToSession(member, newMemberList);                
             }
-            //return RedirectToAction("Index");
             return RedirectToAction("PayNow", "Subscriptions");
-            //return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
         }
 
         private void MemberListToSession(Members members, List<Members> memberList)

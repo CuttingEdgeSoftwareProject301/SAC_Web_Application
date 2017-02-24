@@ -9,13 +9,15 @@ using Microsoft.Extensions.Logging;
 using SAC_Web_Application.Models;
 using SAC_Web_Application.Models.ManageViewModels;
 using SAC_Web_Application.Services;
+using SAC_Web_Application.Models.ClubModel;
 
 namespace SAC_Web_Application.Controllers
-{
+{    
     [RequireHttps]
     [Authorize]
     public class ManageController : Controller
     {
+        private ClubContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -23,12 +25,14 @@ namespace SAC_Web_Application.Controllers
         private readonly ILogger _logger;
 
         public ManageController(
+        ClubContext context,
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -63,6 +67,12 @@ namespace SAC_Web_Application.Controllers
                 Logins = await _userManager.GetLoginsAsync(user),
                 BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
             };
+            var memEmail = HttpContext.User.Identity.Name;
+            Members thisMem = _context.Members.FirstOrDefault(m => m.Email == memEmail);
+            var memID = thisMem.MemberID;
+            var memName = thisMem.FirstName;
+            ViewData["memName"] = memName;
+            ViewData["memID"] = memID;
             return View(model);
         }
 
