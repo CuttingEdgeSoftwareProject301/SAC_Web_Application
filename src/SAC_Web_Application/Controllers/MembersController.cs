@@ -346,7 +346,10 @@ namespace SAC_Web_Application.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                if (User.IsInRole("Admin"))
+                    return RedirectToAction("Index");
+                else
+                    return RedirectToAction("Index", "Manage");
             }
             return View(members);
         }
