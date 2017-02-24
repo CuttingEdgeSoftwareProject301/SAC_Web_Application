@@ -35,6 +35,23 @@ namespace SAC_Web_Application.Services
             return transportWeb.DeliverAsync(myMessage);
         }
 
+        public Task ContactUsEmailAsync(string emailFrom, string emailTo, string message
+            ,string senderName, string subject)
+        {
+            var myMessage = new SendGrid.SendGridMessage();
+            myMessage.AddTo(emailTo);
+            myMessage.From = new System.Net.Mail.MailAddress(emailFrom, senderName);
+            myMessage.Subject = subject;
+            myMessage.Text = message;
+            myMessage.Html = message;
+            var credentials = new System.Net.NetworkCredential(
+                Options.SendGridUser,
+                Options.SendGridKey);
+            // Create a Web transport for sending email.
+            var transportWeb = new SendGrid.Web(credentials);
+            return transportWeb.DeliverAsync(myMessage);
+        }
+
         public Task SendSmsAsync(string number, string message)
         {
             // Plug in your SMS service here to send a text message.
