@@ -22,9 +22,8 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Events/Create
-        public IActionResult ContactUs(string returnUrl = null)
+        public IActionResult ContactUs()
         {
-            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -33,9 +32,8 @@ namespace SAC_Web_Application.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SendQuestion(ContactUsViewModel contactUs, string returnUrl = null)
+        public IActionResult SendQuestion(ContactUsViewModel contactUs)
         {
-            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 _emailSender.ContactUsEmailAsync(contactUs.Email, "paull1068@gmail.com", contactUs.Question
