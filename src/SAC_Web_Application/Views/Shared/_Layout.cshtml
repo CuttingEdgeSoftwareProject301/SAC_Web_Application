@@ -32,7 +32,7 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span>Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About"><span class="glyphicon glyphicon-bullhorn"></span>The Committee</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact"><span class="glyphicon glyphicon-envelope"></span>Contact</a></li>                    
+                    <li><a asp-area="" asp-controller="Contact" asp-action="ContactUs"><span class="glyphicon glyphicon-envelope"></span>Contact</a></li>                    
                     <li><a asp-area="" asp-controller="Home" asp-action="Gallery"><span class="glyphicon glyphicon-camera"></span>Gallery</a></li>
                     @if (User.IsInRole("Admin") || (User.IsInRole("Member")))
                     {
