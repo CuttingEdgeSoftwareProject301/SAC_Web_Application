@@ -4,14 +4,35 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 class="col-lg-offset-3">Edit Member Details</h2>
 
 <form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Members</h4>
+    <div class="form-horizontal col-lg-offset-3">
+        @*<h4>Member Details</h4>*@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="MemberID" />
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger" />
+            </div>
+        </div>
         <div class="form-group">
             <label asp-for="Address1" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -41,24 +62,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="CountyOfBirth" class="col-md-2 control-label"></label>
+            <label asp-for="PostCode" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="CountyOfBirth" class="form-control" />
-                <span asp-validation-for="CountyOfBirth" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DOB" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="DOB" class="form-control" />
-                <span asp-validation-for="DOB" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DateRegistered" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="DateRegistered" class="form-control" />
-                <span asp-validation-for="DateRegistered" class="text-danger" />
+                <input asp-for="PostCode" class="form-control" />
+                <span asp-validation-for="PostCode" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -69,46 +76,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <label asp-for="CountyOfBirth" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Gender" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="LastName" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <input asp-for="MembershipPaid" />
-                    <label asp-for="MembershipPaid"></label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="PhoneNumber" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="PostCode" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="PostCode" class="form-control" />
-                <span asp-validation-for="PostCode" class="text-danger" />
+                <input asp-for="CountyOfBirth" class="form-control" />
+                <span asp-validation-for="CountyOfBirth" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -125,6 +96,39 @@
                 <span asp-validation-for="TeamName" class="text-danger" />
             </div>
         </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="MembershipPaid" />
+                        <label asp-for="MembershipPaid" style="color:red"></label>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*<div class="form-group">
+            <label asp-for="DOB" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger" />
+            </div>
+        </div>*@
+        @*<div class="form-group">
+            <label asp-for="DateRegistered" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateRegistered" class="form-control" />
+                <span asp-validation-for="DateRegistered" class="text-danger" />
+            </div>
+        </div>*@
+        @*<div class="form-group">
+            <label asp-for="Gender" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger" />
+            </div>
+        </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-success" />
@@ -132,10 +136,20 @@
         </div>
     </div>
 </form>
+@if (User.IsInRole("Admin"))
+{
+    <div class="col-lg-offset-3">
+        <a asp-action="Index" class="btn btn-primary">Back to Members List</a>
+    </div>
+}
+else
+{
+    <div class="col-lg-offset-2">
+        <a asp-controller="Manage" asp-action="Index" class="btn btn-primary">Back to Your Account</a>
+        @*<a asp-action="Index" class="btn btn-primary">Back to List</a>*@
+    </div>
+}
 
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
