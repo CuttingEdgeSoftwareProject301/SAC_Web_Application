@@ -26,6 +26,8 @@ namespace SAC_Web_Application.Controllers
             return View(await _context.Events.ToListAsync());
         }
 
+
+
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -112,6 +114,45 @@ namespace SAC_Web_Application.Controllers
             ViewData["AllMembersAttending"] = allMembersAttending;
             ViewData["EventID"] = id;
 
+            return View(events);
+        }
+
+        // GET: Events/Details/5
+        public async Task<IActionResult> AllDetails(int? id)
+        {
+            //bool IsMembersAttending = false;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var events = await _context.Events.SingleOrDefaultAsync(m => m.EventID == id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            // Retrieve all members that are attending this event
+            var allMemsAttend =
+                 from member in _context.Members
+                 join memberEvents in _context.MemberEvents
+                 on member.MemberID equals memberEvents.MemberID
+                 where memberEvents.EventID == id
+                 && memberEvents.MemberID == member.MemberID
+                 select new Members
+                 {
+                     MemberID = member.MemberID,
+                     FirstName = member.FirstName,
+                     LastName = member.LastName,
+                     TeamName = member.TeamName
+                 };
+
+            List<Members> allMembersAttending = allMemsAttend.ToList();
+            
+            ViewData["AllMembersAttending"] = allMembersAttending;
+            ViewData["EventID"] = id;
+
+            //return RedirectToAction("AllDetails");
             return View(events);
         }
 

@@ -4,9 +4,7 @@
 
 @{
     ViewData["Title"] = "Details";
-
-    List<Members> membersAttending = (List<Members>)ViewData["MembersAttending"];
-    List<Members> membersNotAttending = (List<Members>)ViewData["MembersNotAttending"];
+    List<Members> allMembersAttending = (List<Members>)ViewData["AllMembersAttending"];
 }
 
 <h3>@Html.DisplayFor(model => model.EventTitle)</h3>
@@ -35,24 +33,13 @@
     </dl>
 </div>
 
-@if (membersAttending.Count != 0)
-{
-    <div id="MembersAttending">
-        @Html.Partial("~/Views/Events/_MembersAttending.cshtml", membersAttending)
-    </div>
-}
-
-@if (membersNotAttending.Count != 0)
+@if (allMembersAttending.Count != 0)
 {
     <div id="MembersNotAttending">
-        @Html.Partial("~/Views/Events/_MembersNotAttending.cshtml", membersNotAttending)
+        @Html.Partial("~/Views/Events/_AllMembersAttending.cshtml", allMembersAttending)
     </div>
 }
 
-<div class="form-group">
-    <a asp-action="AllDetails" asp-route-id="@Model.EventID" class="btn btn-primary btn-xs">All Members Attending</a>
-</div>
-
-<div class="form-group">
-    <a asp-action="Index" class="btn btn-primary btn-xs">Back to Events</a>
+<div>
+    <a asp-action="Details" asp-route-id="@Model.EventID" class="btn btn-primary btn-xs">Back</a>
 </div>
