@@ -1,7 +1,7 @@
 @model IEnumerable<SAC_Web_Application.Models.ClubModel.Members>
 
 <div class="panel panel-default">
-    <div class="panel-heading">All Members Entered</div>
+    <div class="panel-heading h3">Event Entries</div>
     <div class="panel-body">
         <table class="table table-hover table-responsive table-condensed">
             <thead>
@@ -11,19 +11,7 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.LastName)
-                    </th>
-                    @*<th>
-                        @Html.DisplayNameFor(model => model.Address1)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.County)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Gender)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Province)
-                    </th>*@
+                    </th>                   
                     <th>
                         @Html.DisplayNameFor(model => model.TeamName)
                     </th>

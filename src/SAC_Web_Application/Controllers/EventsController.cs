@@ -59,10 +59,6 @@ namespace SAC_Web_Application.Controllers
                      MemberID = member.MemberID,
                      FirstName = member.FirstName,
                      LastName = member.LastName,
-                     Address1 = member.Address1,
-                     County = member.County,
-                     Gender = member.Gender,
-                     Province = member.Province,
                      TeamName = member.TeamName
                  };
 
@@ -79,10 +75,6 @@ namespace SAC_Web_Application.Controllers
                     MemberID = member.MemberID,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
-                    Address1 = member.Address1,
-                    County = member.County,
-                    Gender = member.Gender,
-                    Province = member.Province,
                     TeamName = member.TeamName
                 };
 
@@ -100,10 +92,6 @@ namespace SAC_Web_Application.Controllers
                      MemberID = member.MemberID,
                      FirstName = member.FirstName,
                      LastName = member.LastName,
-                     Address1 = member.Address1,
-                     County = member.County,
-                     Gender = member.Gender,
-                     Province = member.Province,
                      TeamName = member.TeamName
                  };
 
