@@ -110,7 +110,7 @@ namespace SAC_Web_Application.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind
-            ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
+            ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName,Category")]
             Members members)
         {
             // Query the database with values of drop down lists to get the text
@@ -135,6 +135,13 @@ namespace SAC_Web_Application.Controllers
 
             // GET THE CHOSEN SUBSCRIPTION ID AND STORE TO A VARIABLE FOR FUTURE USE
             int subNum = members.Identifier;
+
+            // GET THE AGE OF THE MEMBER
+            int age = GetMemberAge(members);
+
+            AssignMemberCategory(members, age);
+
+
 
             //CREATE A LIST TO STORE THE ATHLETE DETAILS
             List<Members> memberList = new List<Members>();
@@ -167,6 +174,27 @@ namespace SAC_Web_Application.Controllers
             }
             // If we got this far, something failed, redisplay form
             return View(members);
+        }
+
+        private static void AssignMemberCategory(Members members, int age)
+        {
+            if (age < 18)
+                members.Category = "Junior";
+            else if (age >= 18 && age < 40)
+                members.Category = "Senior";
+            else
+                members.Category = "Master";
+        }
+
+        private static int GetMemberAge(Members members)
+        {
+            int age;
+            DateTime now = DateTime.Now;
+
+            age = now.Year - members.DOB.Year;
+            if ((now.Month < members.DOB.Month) || (now.Month == members.DOB.Month) && (now.Day < members.DOB.Day))
+                age--;
+            return age;
         }
 
         // GET: Members/Create2
