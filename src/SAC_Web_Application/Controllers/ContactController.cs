@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SAC_Web_Application.Models.ContactViewModels;
 using SAC_Web_Application.Services;
 using Microsoft.AspNetCore.Authorization;
+using SAC_Web_Application.Models.GroupEmailModel;
 
 namespace SAC_Web_Application.Controllers
 {
