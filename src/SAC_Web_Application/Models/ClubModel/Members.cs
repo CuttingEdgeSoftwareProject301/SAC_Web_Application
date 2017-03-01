@@ -39,9 +39,7 @@ namespace SAC_Web_Application.Models.ClubModel
         public string CountyOfBirth { get; set; }
         public string Province { get; set; }
         public bool MembershipPaid { get; set; }
-        //[Required]
-        //[ForeignKey("Payments")]
-        //public string PaymentID { get; set; }
+        public string Category { get; set; }
 
         public List<MemberPayment> MemberPayments { get; set; }
         public List<MemberEvent> MemberEvents { get; set; }
