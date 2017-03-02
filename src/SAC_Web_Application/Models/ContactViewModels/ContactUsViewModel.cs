@@ -10,10 +10,11 @@ namespace SAC_Web_Application.Models.ContactViewModels
     {
         [EmailAddress]
         [Required]
+        [Display(Name = "Your Email")]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Full Name")]
+        [Display(Name = "Your Name")]
         public string FullName { get; set; }
 
         [Required]
