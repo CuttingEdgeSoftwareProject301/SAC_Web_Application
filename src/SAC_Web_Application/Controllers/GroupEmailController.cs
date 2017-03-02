@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SAC_Web_Application.Models.GroupEmailModel;
 using SAC_Web_Application.Services;
 using SAC_Web_Application.Models.ClubModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SAC_Web_Application.Controllers
 {
@@ -22,6 +23,8 @@ namespace SAC_Web_Application.Controllers
         // GET: GroupEmail
         public ActionResult GroupEmail()
         {
+            var categories = _context.Categories.Select(c => new { Id = c.CatID, Value = c.CatName });
+            ViewData["Categories"] = new SelectList(categories, "Id", "Value");
             return View();
         }
         [HttpPost]
@@ -29,7 +32,10 @@ namespace SAC_Web_Application.Controllers
         public IActionResult SendGroupEmail(GroupEmailViewModel groupEmail, string EmailTo)
         {
             List<Members> memToMail = new List<Members>();
-            string category = EmailTo;
+            int catID = Convert.ToInt32(EmailTo);
+            var cat = _context.Categories.Where(c => c.CatID == catID).First();
+            string category = cat.CatName;
+
             if (category == "All Members")
             memToMail = _context.Members.ToList();
             else
@@ -42,9 +48,19 @@ namespace SAC_Web_Application.Controllers
                     _emailSender.SendEmailAsync(item.Email, groupEmail.EmailTitle, groupEmail.EmailContent);             
                 }
                 ModelState.AddModelError(string.Empty, "Your message has been sent sucessfully");
-                return View("GroupEmail", groupEmail);
+                //return View("GroupEmail", groupEmail);
+                return RedirectToAction("GroupEmailSuccess", "GroupEmail");
             }
+            
             return View(groupEmail);
+        }
+
+        // GET: GroupEmailSuccess
+        public ActionResult GroupEmailSuccess()
+        {
+            //var categories = _context.Categories.Select(c => new { Id = c.CatID, Value = c.CatName });
+            //ViewData["Categories"] = new SelectList(categories, "Id", "Value");
+            return View();
         }
     }
 }

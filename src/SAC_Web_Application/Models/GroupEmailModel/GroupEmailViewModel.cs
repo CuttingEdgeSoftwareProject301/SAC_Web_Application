@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace SAC_Web_Application.Models.GroupEmailModel
     {
         [Required, Display(Name = "Recipients")]
         public string EmailTo { get; set; }
+
+        public SelectList EmailToList { get; set; }
 
         [Required, Display(Name = "Email Subject")]
         public string EmailTitle { get; set; }

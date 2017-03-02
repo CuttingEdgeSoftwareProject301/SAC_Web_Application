@@ -1,0 +1,24 @@
+@model SAC_Web_Application.Models.ClubModel.Members
+
+@{
+    ViewData["Title"] = "GroupEmailSuccess";
+}
+
+<h2 class="text-success col-md-offset-3">Emails Sent Successfully</h2>
+
+<form asp-action="GroupEmailSuccess">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <a asp-controller="Home" asp-action="Admin" class="btn btn-primary col-md-offset-3" style="width:115px">Back to Admin</a>
+        </div>
+        <div class="form-group">
+            <a asp-controller="GroupEmail" asp-action="GroupEmail" class="btn btn-primary col-md-offset-3" style="width:115px">Back to Email</a>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

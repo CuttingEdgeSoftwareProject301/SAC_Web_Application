@@ -28,6 +28,7 @@ namespace SAC_Web_Application.Models.ClubModel
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Events> Events { get; set; }
         public DbSet<MemberEvent> MemberEvents { get; set; }
+        public DbSet<Categories> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

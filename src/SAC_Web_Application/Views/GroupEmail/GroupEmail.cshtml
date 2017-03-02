@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "GroupEmail";
+
+    SelectList ddlCategories = (SelectList)ViewData["Categories"];
 }
 
 <h2>GroupEmail</h2>
@@ -9,17 +11,11 @@
 <form asp-controller="GroupEmail" asp-action="SendGroupEmail" method="post">
     <div class="form-horizontal">
         <hr />
-        <div asp-validation-summary="ModelOnly" class="text-success"></div>
+        @*<div asp-validation-summary="ModelOnly" class="text-success"></div>*@
         <div class="form-group">
             <label asp-for="EmailTo" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-            @Html.DropDownList("EmailTo", new List<SelectListItem>
-            {
-                new SelectListItem {Text = "All Members", Value = "All Members" },
-                new SelectListItem {Text = "Junior", Value = "Junior" },
-                new SelectListItem {Text = "Senior", Value = "Senior" },
-                new SelectListItem {Text = "Master", Value = "Master" }
-            }/*, new { @class = "form-control" }*/)
+                <select asp-for="EmailTo" asp-items="@ddlCategories" class="form-control"></select>
             </div>
         </div>        
         <div class="form-group">
