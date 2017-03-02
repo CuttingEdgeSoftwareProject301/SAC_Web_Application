@@ -14,7 +14,8 @@ namespace SAC_Web_Application.Models.GroupEmailModel
         [Required, Display(Name = "Email Subject")]
         public string EmailTitle { get; set; }
 
-        [Required, Display(Name = "Email Content")]
+        [Required, Display(Name = "Message")]
+        [DataType(DataType.MultilineText)]
         public string EmailContent { get; set; }
     }
 }
