@@ -78,10 +78,10 @@ namespace SAC_Web_Application.Controllers
                                         
                     // GET ROLES FOR THIS USER & REDIRECT ACCORDINGLY
                     var roles = await _userManager.GetRolesAsync(user);
-                    if (roles.Contains("Member"))
-                        return RedirectToAction(nameof(HomeController.Index), "Home");
-                    else if (roles.Contains("Admin"))
+                    if (roles.Contains("Admin"))
                         return RedirectToAction(nameof(HomeController.Admin), "Home");
+                    else if (roles.Contains("Member"))
+                        return RedirectToAction(nameof(HomeController.Index), "Home");                    
                     else if (roles.Contains("RegisteredUser"))
                         return RedirectToAction(nameof(SubscriptionsController.PayNow), "Subscriptions");
                     else

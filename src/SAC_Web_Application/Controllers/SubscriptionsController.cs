@@ -193,17 +193,37 @@ namespace SAC_Web_Application.Controllers
                 memberList = (obj);
             }
             if(User.IsInRole("RegisteredUser"))
+            {
                 // Retrieve members that are attached to this user account 
-                memberList = _context.Members.Where(m => m.Email == User.FindFirstValue(ClaimTypes.Name)).ToList();
+                memberList = GetAssociatedMembers();
+            }
+
             MemberPayment memPay = new MemberPayment();
             foreach (Members member in memberList)
             {
                 memPay.MemberID = member.MemberID;
                 memPay.PaymentID = TransactionID;
-                //MEMBERSHIP PAID COLUMN UPDATED TO TRUE USING A TRIGGER ON MEMBERPAYMENTS TABLE
+                //MEMBERSHIP PAID COLUMN UPDATED TO 'TRUE' USING A TRIGGER ON MEMBERPAYMENTS TABLE
                 _context.Add(memPay);
                 _context.SaveChanges();
             }
+        }
+
+        private List<Members> GetAssociatedMembers()
+        {
+            List<Members> memberList;
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);
+            Members thisMember = _context.Members.Where(m => m.Email == userEmail).First();
+            MemberPayment memPayment = _context.MemberPayments.Where(mp => mp.MemberID == thisMember.MemberID).Last();
+            List<MemberPayment> memPayments = _context.MemberPayments.Where(mp => mp.PaymentID == memPayment.PaymentID).ToList();
+            memberList = new List<Members>();
+            foreach (var item in memPayments)
+            {
+                Members member = _context.Members.Where(m => m.MemberID == item.MemberID).First();
+                memberList.Add(member);
+            }
+
+            return memberList;
         }
 
         private void UpdatePaymentTable(string TransactionID, string amount)
@@ -221,8 +241,7 @@ namespace SAC_Web_Application.Controllers
         private async Task AddUserToMemberRole()
         {
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
-            var userEmail = User.FindFirstValue(ClaimTypes.Name);            
-            ////if(User.IsInRole("RegisteredUser"))
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);   
             if (userEmail != null)
             {
                 ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
