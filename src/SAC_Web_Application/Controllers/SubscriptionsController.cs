@@ -203,7 +203,7 @@ namespace SAC_Web_Application.Controllers
             {
                 memPay.MemberID = member.MemberID;
                 memPay.PaymentID = TransactionID;
-                //MEMBERSHIP PAID COLUMN UPDATED TO TRUE USING A TRIGGER ON MEMBERPAYMENTS TABLE
+                //MEMBERSHIP PAID COLUMN UPDATED TO 'TRUE' USING A TRIGGER ON MEMBERPAYMENTS TABLE
                 _context.Add(memPay);
                 _context.SaveChanges();
             }
@@ -241,8 +241,7 @@ namespace SAC_Web_Application.Controllers
         private async Task AddUserToMemberRole()
         {
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
-            var userEmail = User.FindFirstValue(ClaimTypes.Name);            
-            ////if(User.IsInRole("RegisteredUser"))
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);   
             if (userEmail != null)
             {
                 ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);

@@ -447,7 +447,7 @@ namespace SAC_Web_Application.Controllers
                 await RemoveFromMemberRole(memberEmail);
                 await AddUserToRegisteredUserRole(memberEmail);
 
-                //await _emailSender.SendEmailAsync(member.Email, "Annual Subscription", message);
+                await _emailSender.SendEmailAsync(member.Email, "Annual Subscription", message);
             }
             return View();
         }
