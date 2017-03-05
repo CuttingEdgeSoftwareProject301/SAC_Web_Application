@@ -1,0 +1,17 @@
+@model SAC_Web_Application.Models.ClubModel.Members
+
+@{
+    ViewData["Title"] = "Annual Reset";
+}
+
+<h2>AnnualReset</h2>
+
+
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

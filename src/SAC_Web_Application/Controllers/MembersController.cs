@@ -20,10 +20,12 @@ namespace SAC_Web_Application.Controllers
     public class MembersController : Controller
     {
         private ClubContext _context;
-        
-        public MembersController(ClubContext context)
+        private UserManager<ApplicationUser> _userManager;
+
+        public MembersController(ClubContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
         }
 
         // GET: Members
@@ -139,9 +141,8 @@ namespace SAC_Web_Application.Controllers
             // GET THE AGE OF THE MEMBER
             int age = GetMemberAge(members);
 
+            //ASSIGN THE MEMBER TO AN AGE CATEGORY
             AssignMemberCategory(members, age);
-
-
 
             //CREATE A LIST TO STORE THE ATHLETE DETAILS
             List<Members> memberList = new List<Members>();
@@ -162,8 +163,6 @@ namespace SAC_Web_Application.Controllers
                     MemberListToSession(members, memberList);
 
                     return RedirectToAction("PayNow", "Subscriptions");
-                    //return RedirectToAction("SubscriptionSuccessfull", "Subscriptions");
-                    //return RedirectToAction("Index");
                 }
                 //IF MORE THAN ONE MEMBER BEING REGISTERED GO TO CREATE2 ACTION
                 else
@@ -250,6 +249,12 @@ namespace SAC_Web_Application.Controllers
                 var obj = JsonConvert.DeserializeObject<List<Members>>(str);
                 memberList = (obj);
             }
+
+            // GET THE AGE OF THE MEMBER
+            int age = GetMemberAge(members);
+
+            //ASSIGN THE MEMBER TO AN AGE CATEGORY
+            AssignMemberCategory(members, age);
 
             // THESE COLUMNS POPULATED VIA THE USER DETAILS (ATHELETE 1)
             members.Address1 = memberList.ElementAt(0).Address1;
@@ -419,6 +424,43 @@ namespace SAC_Web_Application.Controllers
         public IActionResult Subscriptions()
         {
             return View();
+        }
+
+        public IActionResult AnnualResetConfirm()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> AnnualReset()
+        {
+            List<Members> members = _context.Members.ToList();
+            foreach (var member in members)
+            {
+                string memberEmail = member.Email;
+                member.MembershipPaid = false;
+                _context.SaveChanges();
+
+                await RemoveFromMemberRole(memberEmail);
+            }
+            return View();
+        }
+
+        private async Task RemoveFromMemberRole(string memberEmail)
+        {
+            if (memberEmail != null)
+            {
+                ApplicationUser user = await _userManager.FindByEmailAsync(memberEmail);
+                if (user != null)
+                await _userManager.RemoveFromRoleAsync(user, "Member");
+            }
+        }
+        private async Task AddUserToRegisteredUserRole(string memberEmail)
+        {
+            if (memberEmail != null)
+            {
+                ApplicationUser user = await _userManager.FindByEmailAsync(memberEmail);
+                await _userManager.AddToRolesAsync(user, new string[] { "RegisteredUser" });
+            }
         }
     }
 }
