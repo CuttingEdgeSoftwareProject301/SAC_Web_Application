@@ -166,21 +166,21 @@ namespace SAC_Web_Application.Controllers
         {
             if (Request.Query["tx"] != "")
             {
-                //AddToMemberRole();
-                await AddUserToMemberRole();
-
                 string TransactionID = Request.Query["tx"];
                 string amount = Request.Query["amt"];
 
                 UpdatePaymentTable(TransactionID, amount);
                 UpdateMemberPaymentsTable(TransactionID);
 
+                //AddToMemberRole();
+                await AddUserToMemberRole();
+
                 ViewData["Message"] = string.Format("Paypal Reference {0}", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid ${0:c}", amount);
             }
             //return RedirectToAction("Index", "Members");
             return View();
-        }
+        }        
 
         private void UpdateMemberPaymentsTable(string TransactionID)
         {
@@ -192,6 +192,9 @@ namespace SAC_Web_Application.Controllers
                 var obj = JsonConvert.DeserializeObject<List<Members>>(str);
                 memberList = (obj);
             }
+            if(User.IsInRole("RegisteredUser"))
+                // Retrieve members that are attached to this user account 
+                memberList = _context.Members.Where(m => m.Email == User.FindFirstValue(ClaimTypes.Name)).ToList();
             MemberPayment memPay = new MemberPayment();
             foreach (Members member in memberList)
             {
@@ -218,7 +221,8 @@ namespace SAC_Web_Application.Controllers
         private async Task AddUserToMemberRole()
         {
             // GETS THE EMAIL ADDRESS OF THE USER THAT IS CURRENTLY LOGGED IN
-            var userEmail = User.FindFirstValue(ClaimTypes.Name);
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);            
+            ////if(User.IsInRole("RegisteredUser"))
             if (userEmail != null)
             {
                 ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);

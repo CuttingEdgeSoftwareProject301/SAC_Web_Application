@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using SAC_Web_Application.Models.MembersViewModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using SAC_Web_Application.Services;
 
 //Members Controller
 namespace SAC_Web_Application.Controllers
@@ -21,11 +22,13 @@ namespace SAC_Web_Application.Controllers
     {
         private ClubContext _context;
         private UserManager<ApplicationUser> _userManager;
+        private IEmailSender _emailSender;
 
-        public MembersController(ClubContext context, UserManager<ApplicationUser> userManager)
+        public MembersController(ClubContext context, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         // GET: Members
@@ -436,11 +439,15 @@ namespace SAC_Web_Application.Controllers
             List<Members> members = _context.Members.ToList();
             foreach (var member in members)
             {
+                string message = string.Format("Your annual subscription has expired.\nPlease visit sligoathleticsclub.com to renew your membership");
                 string memberEmail = member.Email;
                 member.MembershipPaid = false;
                 _context.SaveChanges();
 
                 await RemoveFromMemberRole(memberEmail);
+                await AddUserToRegisteredUserRole(memberEmail);
+
+                //await _emailSender.SendEmailAsync(member.Email, "Annual Subscription", message);
             }
             return View();
         }
@@ -459,7 +466,8 @@ namespace SAC_Web_Application.Controllers
             if (memberEmail != null)
             {
                 ApplicationUser user = await _userManager.FindByEmailAsync(memberEmail);
-                await _userManager.AddToRolesAsync(user, new string[] { "RegisteredUser" });
+                if(user != null)
+                    await _userManager.AddToRolesAsync(user, new string[] {"RegisteredUser"});
             }
         }
     }

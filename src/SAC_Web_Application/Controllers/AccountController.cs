@@ -82,8 +82,8 @@ namespace SAC_Web_Application.Controllers
                         return RedirectToAction(nameof(HomeController.Index), "Home");
                     else if (roles.Contains("Admin"))
                         return RedirectToAction(nameof(HomeController.Admin), "Home");
-                    //else if (roles.Contains("RegisteredUser"))
-                    //    return RedirectToAction(nameof());
+                    else if (roles.Contains("RegisteredUser"))
+                        return RedirectToAction(nameof(SubscriptionsController.PayNow), "Subscriptions");
                     else
                         return RedirectToAction(nameof(SubscriptionsController.Index), "Subscriptions");
                 }
