@@ -193,8 +193,11 @@ namespace SAC_Web_Application.Controllers
                 memberList = (obj);
             }
             if(User.IsInRole("RegisteredUser"))
+            {
                 // Retrieve members that are attached to this user account 
-                memberList = _context.Members.Where(m => m.Email == User.FindFirstValue(ClaimTypes.Name)).ToList();
+                memberList = GetAssociatedMembers();
+            }
+
             MemberPayment memPay = new MemberPayment();
             foreach (Members member in memberList)
             {
@@ -204,6 +207,23 @@ namespace SAC_Web_Application.Controllers
                 _context.Add(memPay);
                 _context.SaveChanges();
             }
+        }
+
+        private List<Members> GetAssociatedMembers()
+        {
+            List<Members> memberList;
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);
+            Members thisMember = _context.Members.Where(m => m.Email == userEmail).First();
+            MemberPayment memPayment = _context.MemberPayments.Where(mp => mp.MemberID == thisMember.MemberID).First();
+            List<MemberPayment> memPayments = _context.MemberPayments.Where(mp => mp.PaymentID == memPayment.PaymentID).ToList();
+            memberList = new List<Members>();
+            foreach (var item in memPayments)
+            {
+                Members member = _context.Members.Where(m => m.MemberID == item.MemberID).First();
+                memberList.Add(member);
+            }
+
+            return memberList;
         }
 
         private void UpdatePaymentTable(string TransactionID, string amount)
