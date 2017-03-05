@@ -43,33 +43,25 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
-            
             // Retrieve members that are attached to this user account 
-            List<Members> userMembers = _context.Members.Where(m => m.Email == User.FindFirstValue(ClaimTypes.Name)).ToList();
+            var userEmail = User.FindFirstValue(ClaimTypes.Name);
+            Members thisMember = _context.Members.Where(m => m.Email == userEmail).First();
+            MemberPayment memPay = _context.MemberPayments.Where(mp => mp.MemberID == thisMember.MemberID).First();
+            List<MemberPayment> memPayments = _context.MemberPayments.Where(mp => mp.PaymentID == memPay.PaymentID).ToList();
+            List<Members> userMembers = new List<Members>();
+            foreach (var item in memPayments)
+            {
+                Members member = _context.Members.Where(m => m.MemberID == item.MemberID).First();
+                userMembers.Add(member);
+            }
 
-            // Retrieve members that are attending this event
-            var memsAttend =
-                 from member in userMembers
-                 join memberEvents in _context.MemberEvents
-                 on member.MemberID equals memberEvents.MemberID
-                 where memberEvents.EventID == id
-                 && memberEvents.MemberID == member.MemberID
-                 select new Members
-                 {
-                     MemberID = member.MemberID,
-                     FirstName = member.FirstName,
-                     LastName = member.LastName,
-                     TeamName = member.TeamName
-                 };
-
-            List<Members> membersAttending = memsAttend.ToList();
-
-            // retrieve members who are not attending this event
-            var memsNotAttend =
+          //  Retrieve members that are attending this event
+           var memsAttend =
                 from member in userMembers
-                where !membersAttending
-                .Select(m => m.MemberID)
-                .Contains(member.MemberID)
+                join memberEvents in _context.MemberEvents
+                on member.MemberID equals memberEvents.MemberID
+                where memberEvents.EventID == id
+                && memberEvents.MemberID == member.MemberID
                 select new Members
                 {
                     MemberID = member.MemberID,
@@ -78,26 +70,42 @@ namespace SAC_Web_Application.Controllers
                     TeamName = member.TeamName
                 };
 
-            List<Members> membersNotAttending = memsNotAttend.ToList();
+        List<Members> membersAttending = memsAttend.ToList();
 
-            // Retrieve all members that are attending this event
-            var allMemsAttend =
-                 from member in _context.Members
-                 join memberEvents in _context.MemberEvents
-                 on member.MemberID equals memberEvents.MemberID
-                 where memberEvents.EventID == id
-                 && memberEvents.MemberID == member.MemberID
-                 select new Members
-                 {
-                     MemberID = member.MemberID,
-                     FirstName = member.FirstName,
-                     LastName = member.LastName,
-                     TeamName = member.TeamName
-                 };
+        // retrieve members who are not attending this event
+        var memsNotAttend =
+            from member in userMembers
+            where !membersAttending
+            .Select(m => m.MemberID)
+            .Contains(member.MemberID)
+            select new Members
+            {
+                MemberID = member.MemberID,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                TeamName = member.TeamName
+            };
 
-            List<Members> allMembersAttending = allMemsAttend.ToList();
+        List<Members> membersNotAttending = memsNotAttend.ToList();
 
-            ViewData["MembersAttending"] = membersAttending;
+        // Retrieve all members that are attending this event
+        var allMemsAttend =
+             from member in _context.Members
+             join memberEvents in _context.MemberEvents
+             on member.MemberID equals memberEvents.MemberID
+             where memberEvents.EventID == id
+             && memberEvents.MemberID == member.MemberID
+             select new Members
+             {
+                 MemberID = member.MemberID,
+                 FirstName = member.FirstName,
+                 LastName = member.LastName,
+                 TeamName = member.TeamName
+             };
+
+        List<Members> allMembersAttending = allMemsAttend.ToList();
+
+        ViewData["MembersAttending"] = membersAttending;
             ViewData["MembersNotAttending"] = membersNotAttending;
             ViewData["AllMembersAttending"] = allMembersAttending;
             ViewData["EventID"] = id;
