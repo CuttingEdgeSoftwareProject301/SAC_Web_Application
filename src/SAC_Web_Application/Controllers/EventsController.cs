@@ -46,7 +46,7 @@ namespace SAC_Web_Application.Controllers
             // Retrieve members that are attached to this user account 
             List<Members> userMembers = GetAssociatedMembers();
 
-            //  Retrieve members that are attending this event
+            //  Retrieve associated members that are attending this event
             var memsAttend =
                  from member in userMembers
                  join memberEvents in _context.MemberEvents
@@ -63,7 +63,7 @@ namespace SAC_Web_Application.Controllers
 
             List<Members> membersAttending = memsAttend.ToList();
 
-            // retrieve members who are not attending this event
+            // retrieve associated members who are not attending this event
             var memsNotAttend =
                 from member in userMembers
                 where !membersAttending
@@ -96,12 +96,30 @@ namespace SAC_Web_Application.Controllers
 
             List<Members> allMembersAttending = allMemsAttend.ToList();
 
+            // retrieve all members who are not attending this event
+            var allMemsNotAttend =
+                from member in _context.Members
+                where !membersAttending
+                .Select(m => m.MemberID)
+                .Contains(member.MemberID)
+                select new Members
+                {
+                    MemberID = member.MemberID,
+                    FirstName = member.FirstName,
+                    LastName = member.LastName,
+                    TeamName = member.TeamName
+                };
+
+            List<Members> allMembersNotAttending = allMemsNotAttend.ToList();
+
             ViewData["MembersAttending"] = membersAttending;
             ViewData["MembersNotAttending"] = membersNotAttending;
             ViewData["AllMembersAttending"] = allMembersAttending;
-            ViewData["EventID"] = id;
-
+            ViewData["AllMembersNotAttending"] = allMembersNotAttending;
+            ViewData["EventID"] = id;                   
+           
             return View(events);
+
         }
 
         private List<Members> GetAssociatedMembers()
