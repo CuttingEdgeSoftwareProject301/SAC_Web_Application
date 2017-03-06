@@ -16,11 +16,13 @@ namespace SAC_Web_Application.Models.MembersViewModels
         public int Identifier { get; set; }
 
         [Required]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [DataType(DataType.Text)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [DataType(DataType.Text)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
