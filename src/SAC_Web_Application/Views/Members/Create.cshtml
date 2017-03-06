@@ -30,15 +30,15 @@
         <div class="form-group">
             <label asp-for="FirstName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger" data-val-regex="Please enter a valid Name" />
+                <input asp-for="FirstName" class="form-control" data-val-regex="Please enter a valid Name"  />
+                <span asp-validation-for="FirstName" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="LastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger" data-val-regex="Please enter a valid Name"/>
+                <input asp-for="LastName" class="form-control" data-val-regex="Please enter a valid Name" />
+                <span asp-validation-for="LastName" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
