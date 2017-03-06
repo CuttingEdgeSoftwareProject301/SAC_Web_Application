@@ -29,7 +29,7 @@ namespace SAC_Web_Application.Models.MembersViewModels
 
         [Required]
         [DataType(DataType.Date, ErrorMessage = "Please enter a valid Date of birth")]
-        [Display(Name = "Date Of Birth"]
+        [Display(Name = "Date Of Birth")]
         public DateTime DOB { get; set; }
 
         [Required]
