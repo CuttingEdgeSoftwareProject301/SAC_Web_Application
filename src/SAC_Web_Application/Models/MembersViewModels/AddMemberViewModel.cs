@@ -17,19 +17,19 @@ namespace SAC_Web_Application.Models.MembersViewModels
 
         [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text, ErrorMessage = "Please enter a valid Name")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.Text, ErrorMessage = "Please enter a valid Name")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date, ErrorMessage = "Please enter a valid Date of birth")]
+        [Display(Name = "Date Of Birth"]
         public DateTime DOB { get; set; }
 
         [Required]
