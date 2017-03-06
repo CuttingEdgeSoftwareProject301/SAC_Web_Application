@@ -22,7 +22,7 @@
         <div class="form-group">
             @*<label asp-for="Identifier" class="col-md-2 control-label"></label>*@
             <div class="col-md-10">
-                <input asp-for="Identifier" type="hidden" class="form-control" value=@subID />
+                <input asp-for="Identifier" type="hidden"  class="form-control" value=@subID />
                 <span asp-validation-for="Identifier" class="text-danger" />
             </div>
         </div>
@@ -31,14 +31,14 @@
             <label asp-for="FirstName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger" />
+                <span asp-validation-for="FirstName" class="text-danger" data-val-regex="Please enter a valid Name" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="LastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger" />
+                <span asp-validation-for="LastName" class="text-danger" data-val-regex="Please enter a valid Name"/>
             </div>
         </div>
         <div class="form-group">
