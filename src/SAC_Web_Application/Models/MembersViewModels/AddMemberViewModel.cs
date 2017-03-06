@@ -77,7 +77,7 @@ namespace SAC_Web_Application.Models.MembersViewModels
         public SelectList ProvinceList { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }       
 
