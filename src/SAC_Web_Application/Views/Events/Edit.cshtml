@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit";
+
+    SelectList ddlCategories = (SelectList)ViewData["Categories"];
 }
 
 <div class="col-lg-offset-3">
@@ -15,10 +17,9 @@
         <div class="form-group">
             <label asp-for="Category" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger" />
+                <select asp-for="Category" asp-items="@ddlCategories" class="form-control"></select>
             </div>
-        </div>
+        </div>   
         <div class="form-group">
             <label asp-for="Date" class="col-md-2 control-label"></label>
             <div class="col-md-10">

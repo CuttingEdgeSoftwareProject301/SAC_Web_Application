@@ -14,6 +14,8 @@ namespace SAC_Web_Application.Models.ClubModel
         public int EventID { get; set; }
         [Display(Name ="Event Name")]
         public string EventTitle { get; set; }
+
+        [DataType(DataType.Date, ErrorMessage = "Please enter a valid Date of birth")]
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public string Location { get; set; }

@@ -99,7 +99,7 @@ namespace SAC_Web_Application.Controllers
             // retrieve all members who are not attending this event
             var allMemsNotAttend =
                 from member in _context.Members
-                where !membersAttending
+                where !allMembersAttending
                 .Select(m => m.MemberID)
                 .Contains(member.MemberID)
                 select new Members
@@ -180,6 +180,8 @@ namespace SAC_Web_Application.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
+            var categories = _context.Categories.Select(c => new { Id = c.CatID, Value = c.CatName });
+            ViewData["Categories"] = new SelectList(categories, "Id", "Value");
             return View();
         }
 
@@ -192,6 +194,9 @@ namespace SAC_Web_Application.Controllers
         {
             if (ModelState.IsValid)
             {
+                int catId = Convert.ToInt32(events.Category);
+                var category = _context.Categories.Where(c => c.CatID == catId).First();
+                events.Category = category.CatName;
                 _context.Add(events);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -208,6 +213,8 @@ namespace SAC_Web_Application.Controllers
             }
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.EventID == id);
+            var categories = _context.Categories.Select(c => new { Id = c.CatID, Value = c.CatName });
+            ViewData["Categories"] = new SelectList(categories, "Id", "Value");
             if (events == null)
             {
                 return NotFound();
@@ -231,6 +238,9 @@ namespace SAC_Web_Application.Controllers
             {
                 try
                 {
+                    int catId = Convert.ToInt32(events.Category);
+                    var category = _context.Categories.Where(c => c.CatID == catId).First();
+                    events.Category = category.CatName;
                     _context.Update(events);
                     await _context.SaveChangesAsync();
                 }
