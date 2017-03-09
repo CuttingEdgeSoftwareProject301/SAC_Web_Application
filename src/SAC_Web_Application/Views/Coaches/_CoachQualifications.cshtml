@@ -1,0 +1,37 @@
+@model IEnumerable<SAC_Web_Application.Models.ClubModel.Qualifications>
+
+@{
+    string coachName = (string)ViewData["CoachName"];
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading h3">@coachName's Qualifications</div>
+    <div class="panel-body">
+        <table class="table table-hover table-responsive table-condensed">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QualName)
+                    </th>
+              
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QualName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "CoachRemoveQual", "Coaches", new { coachID = ViewData["CoachID"], qualID = item.QualID }, new { @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+

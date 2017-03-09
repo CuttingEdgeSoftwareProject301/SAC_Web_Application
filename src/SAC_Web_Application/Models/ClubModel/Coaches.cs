@@ -16,6 +16,7 @@ namespace SAC_Web_Application.Models.ClubModel
         public string LastName { get; set; }
         public string ContactNumber { get; set; }
         public DateTime GardaVetExpDate { get; set; }
+        public string Availability { get; set; }
 
 
         public List<CoachQualification> coachQualifications { get; set; }

@@ -1,0 +1,63 @@
+@using SAC_Web_Application.Models.ClubModel
+
+@model SAC_Web_Application.Models.ClubModel.Coaches
+
+
+@{
+    ViewData["Title"] = "Details";
+
+    List<Qualifications> coachQualifications = (List<Qualifications>)ViewData["CoachQual"];
+    List<Qualifications> additionalQualifications = (List<Qualifications>)ViewData["AdditionalQual"];
+
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Coaches</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GardaVetExpDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GardaVetExpDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Availability)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Availability)
+        </dd>
+    </dl>
+</div>
+
+<div id="CoachQualications">
+    @Html.Partial("~/Views/Coaches/_CoachQualifications.cshtml", coachQualifications)
+</div>
+
+<div id="AdditionalQualications">
+    @Html.Partial("~/Views/Coaches/_AdditionalQualifications.cshtml", additionalQualifications)
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
