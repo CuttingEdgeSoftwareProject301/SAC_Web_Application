@@ -23,6 +23,7 @@ namespace SAC_Web_Application.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
+            //ViewData["message"] = "";
             return View(await _context.Events.ToListAsync());
         }
 
@@ -116,8 +117,8 @@ namespace SAC_Web_Application.Controllers
             ViewData["MembersNotAttending"] = membersNotAttending;
             ViewData["AllMembersAttending"] = allMembersAttending;
             ViewData["AllMembersNotAttending"] = allMembersNotAttending;
-            ViewData["EventID"] = id;                   
-           
+            ViewData["EventID"] = id;
+            //ViewData["message"] = "";
             return View(events);
 
         }
@@ -172,7 +173,7 @@ namespace SAC_Web_Application.Controllers
             
             ViewData["AllMembersAttending"] = allMembersAttending;
             ViewData["EventID"] = id;
-
+            //ViewData["message"] = "";
             //return RedirectToAction("AllDetails");
             return View(events);
         }
@@ -201,6 +202,7 @@ namespace SAC_Web_Application.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
             return View(events);
         }
 
@@ -295,15 +297,23 @@ namespace SAC_Web_Application.Controllers
 
         // Assign a member to a particular event
         public async Task<IActionResult> MemberAttend(int memberID, int eventID)
-        {        
-            // assign member to event
-            MemberEvent memberEvent = new MemberEvent();
-            memberEvent.MemberID = memberID;
-            memberEvent.EventID = eventID;
-            _context.MemberEvents.Add(memberEvent);
-            await _context.SaveChangesAsync();
-
+        {
+            Members thisMember = _context.Members.Where(m => m.MemberID == memberID).First();
+            Events thisEvent = _context.Events.Where(e => e.EventID == eventID).First();
+            if (thisMember.Category == thisEvent.Category)
+            {
+                // assign member to event
+                MemberEvent memberEvent = new MemberEvent();
+                memberEvent.MemberID = memberID;
+                memberEvent.EventID = eventID;
+                _context.MemberEvents.Add(memberEvent);
+                await _context.SaveChangesAsync();
+                //ViewData["message"] = "";
+            }
+            else
+                ViewData["message"] = "You cannot enter this event ~ wrong age Category";
             return RedirectToAction("Details", new { id = eventID });
+
         }
 
         // Remove a member to a particular event
@@ -314,7 +324,7 @@ namespace SAC_Web_Application.Controllers
                 .Where(me => me.MemberID == memberID && me.EventID == eventID).First();
             _context.MemberEvents.Remove(memberEvent);
             await _context.SaveChangesAsync();
-
+            //ViewData["message"] = "";
             return RedirectToAction("Details", new { id = eventID });
         }
 

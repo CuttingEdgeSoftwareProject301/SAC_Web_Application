@@ -48,7 +48,6 @@ namespace SAC_Web_Application.Controllers
                     _emailSender.SendEmailAsync(item.Email, groupEmail.EmailTitle, groupEmail.EmailContent);             
                 }
                 ModelState.AddModelError(string.Empty, "Your message has been sent sucessfully");
-                //return View("GroupEmail", groupEmail);
                 return RedirectToAction("GroupEmailSuccess", "GroupEmail");
             }
             
@@ -58,8 +57,6 @@ namespace SAC_Web_Application.Controllers
         // GET: GroupEmailSuccess
         public ActionResult GroupEmailSuccess()
         {
-            //var categories = _context.Categories.Select(c => new { Id = c.CatID, Value = c.CatName });
-            //ViewData["Categories"] = new SelectList(categories, "Id", "Value");
             return View();
         }
     }
