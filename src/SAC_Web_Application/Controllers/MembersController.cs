@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,7 +183,7 @@ namespace SAC_Web_Application.Controllers
         {
             if (age < 18)
                 members.Category = "Junior";
-            else if (age >= 18 && age < 40)
+            else if (age >= 18 && age <= 40)
                 members.Category = "Senior";
             else
                 members.Category = "Master";
