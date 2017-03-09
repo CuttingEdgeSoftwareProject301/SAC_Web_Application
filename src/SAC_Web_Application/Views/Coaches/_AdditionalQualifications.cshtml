@@ -19,8 +19,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.QualName)
                         </td>
-                        <td>
-                            @Html.ActionLink("Add", "CoachAssignQual", "Coaches", new { coachID = ViewData["CoachID"], qualID = item.QualID }, new { @class = "btn btn-success btn-xs" })
+                        <td style="margin-right: -1em">
+                            @Html.ActionLink("Add", "CoachAssignQual", "Coaches", new { coachID = ViewData["CoachID"], qualID = item.QualID }, new { @class = "btn btn-success btn-xs"  } )
                         </td>
                     </tr>
 
