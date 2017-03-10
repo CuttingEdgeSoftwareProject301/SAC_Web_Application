@@ -74,7 +74,8 @@ namespace SAC_Web_Application.Controllers
                      MemberID = member.MemberID,
                      FirstName = member.FirstName,
                      LastName = member.LastName,
-                     TeamName = member.TeamName
+                     TeamName = member.TeamName,
+                     Category = member.Category
                  };
 
             List<Members> membersAttending = memsAttend.ToList();
@@ -90,7 +91,8 @@ namespace SAC_Web_Application.Controllers
                     MemberID = member.MemberID,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
-                    TeamName = member.TeamName
+                    TeamName = member.TeamName,
+                    Category = member.Category
                 };
 
             List<Members> membersNotAttending = memsNotAttend.ToList();
@@ -107,7 +109,8 @@ namespace SAC_Web_Application.Controllers
                      MemberID = member.MemberID,
                      FirstName = member.FirstName,
                      LastName = member.LastName,
-                     TeamName = member.TeamName
+                     TeamName = member.TeamName,
+                     Category = member.Category
                  };
 
             List<Members> allMembersAttending = allMemsAttend.ToList();
@@ -123,7 +126,8 @@ namespace SAC_Web_Application.Controllers
                     MemberID = member.MemberID,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
-                    TeamName = member.TeamName
+                    TeamName = member.TeamName,
+                    Category = member.Category
                 };
 
             List<Members> allMembersNotAttending = allMemsNotAttend.ToList();
