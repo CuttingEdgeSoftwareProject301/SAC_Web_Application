@@ -76,6 +76,8 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
+            var qualName = qualifications.QualName;
+            ViewData["qualName"] = qualName;
             return View(qualifications);
         }
 

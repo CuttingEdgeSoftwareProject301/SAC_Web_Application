@@ -12,9 +12,18 @@ namespace SAC_Web_Application.Models.ClubModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CoachID { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Required]
+        [Display(Name = "Phone Number")]
         public string ContactNumber { get; set; }
+        [Required]
+        [Display(Name = "Garda Vetting Expiry")]
+        [DataType(DataType.Date, ErrorMessage = "Please enter a valid Date")]
         public DateTime GardaVetExpDate { get; set; }
         public string Availability { get; set; }
 

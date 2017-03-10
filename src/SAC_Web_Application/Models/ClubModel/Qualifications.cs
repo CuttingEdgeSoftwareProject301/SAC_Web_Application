@@ -12,6 +12,8 @@ namespace SAC_Web_Application.Models.ClubModel
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QualID { get; set; }
+        [Required]
+        [Display(Name = "Qualification Name")]
         public string QualName { get; set; }
 
         public List<CoachQualification> coachQualifications { get; set; }
