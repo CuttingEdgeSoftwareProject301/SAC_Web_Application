@@ -1,4 +1,4 @@
-@model IEnumerable<SAC_Web_Application.Models.ClubModel.Events>
+@model PaginatedList<SAC_Web_Application.Models.ClubModel.Events>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,20 +18,31 @@
         <strong>Event List</strong>
     </div>
 
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color form-inline">
+            <br />
+            <p style="font-weight: bold" class="col-md-offset-1">
+                Search by Name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-xs btn-primary" />
+                <a asp-action="Index" class="btn btn-xs btn-primary">Reset List</a>
+            </p>
+        </div>
+    </form>
+
     <table class="table table-hover table-responsive table-condensed">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.EventTitle)
+                    <a style="text-decoration: none; color: black">Event Name</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    <a style="text-decoration: none; color: black">Date</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Location)
+                    <a style="text-decoration: none; color: black">Location</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Category)
+                    <a style="text-decoration: none; color: black">Category</a>
                 </th>
                 <th></th>
             </tr>
@@ -64,6 +75,26 @@
             }
         </tbody>
     </table>
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+</div>
+<div class="form-group">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-primary @prevDisabled btn">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-primary @nextDisabled btn btn-primary">
+        Next
+    </a>
 </div>
 <div class="form-group">
     <div>

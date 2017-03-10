@@ -21,10 +21,25 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? page)
         {
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var events = from e in _context.Events
+                          select e;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                events = events.Where(e => e.EventTitle .Contains(searchString));
+            }
             //ViewData["message"] = "";
-            return View(await _context.Events.ToListAsync());
+            //return View(await _context.Events.ToListAsync());
+            int pageSize = 8;
+            return View(await PaginatedList<Events>.CreateAsync(events.AsNoTracking(), page ?? 1, pageSize));
         }
 
 
@@ -300,7 +315,7 @@ namespace SAC_Web_Application.Controllers
         {
             Members thisMember = _context.Members.Where(m => m.MemberID == memberID).First();
             Events thisEvent = _context.Events.Where(e => e.EventID == eventID).First();
-            if (thisMember.Category == thisEvent.Category)
+            if ((thisMember.Category == thisEvent.Category)||(thisEvent.Category == "All Members"))
             {
                 // assign member to event
                 MemberEvent memberEvent = new MemberEvent();
@@ -327,14 +342,5 @@ namespace SAC_Web_Application.Controllers
             //ViewData["message"] = "";
             return RedirectToAction("Details", new { id = eventID });
         }
-
-        #region Partials
-        /*public PartialViewResult _MemberEvents(int? id)
-        {
-            ViewBag.clubId = id;
-            var qry = db.ClubEvents.Where(ce => ce.ClubId == id).ToList();
-            return PartialView(qry);
-        }*/
-        #endregion
     }
 }
