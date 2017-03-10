@@ -73,9 +73,8 @@ namespace SAC_Web_Application.Controllers
             ViewData["CoachName"] = coaches.FirstName;
             ViewData["CoachQual"] = coachQualifications;
             ViewData["AdditionalQual"] = additionalQualifications;
-
-
-
+            var coachName = coaches.FirstName;
+            ViewData["coachName"] = coachName;
 
             return View(coaches);
         }
@@ -115,6 +114,8 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
+            var coachName = coaches.FirstName;
+            ViewData["coachName"] = coachName;
             return View(coaches);
         }
 

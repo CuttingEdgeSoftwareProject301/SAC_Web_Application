@@ -4,56 +4,69 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>List of coaches</h2>
+<h2>Coaches</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-success">Create New Coach</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GardaVetExpDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Availability)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GardaVetExpDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Availability)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.CoachID" class="btn btn-primary btn-xs">Details</a>
-                <a asp-action="Edit" asp-route-id="@item.CoachID" class="btn btn-warning btn-xs">Edit</a> 
-                <a asp-action="Delete" asp-route-id="@item.CoachID" class="btn btn-danger btn-xs">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Coach List</strong>
+    </div>
+
+    <table class="table table-hover table-responsive table-condensed">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContactNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GardaVetExpDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Availability)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GardaVetExpDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Availability)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.CoachID" class="btn btn-primary btn-xs">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.CoachID" class="btn btn-warning btn-xs">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.CoachID" class="btn btn-danger btn-xs">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div>
+        <a asp-area="" asp-controller="Home" asp-action="Admin" class="btn btn-primary">Back</a>
+    </div>
+</div>

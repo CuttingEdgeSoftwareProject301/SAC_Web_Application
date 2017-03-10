@@ -4,16 +4,16 @@
     ViewData["Title"] = "GroupSMSSuccess";
 }
 
-<h2 class="text-success col-md-offset-3">Emails Sent Successfully</h2>
+<h2 class="text-success col-md-offset-3 form-group">Emails Sent Successfully</h2>
 
 <form asp-action="GroupSMSSuccess">
-    <div class="form-horizontal">
+    <div class="form-group">
         <div class="form-group">
             <a asp-controller="Home" asp-action="Admin" class="btn btn-primary col-md-offset-3" style="width:115px">Back to Admin</a>
-        </div>
+        </div>        
         <div class="form-group">
             <a asp-controller="GroupEmail" asp-action="GroupEmailSucess" class="btn btn-primary col-md-offset-3" style="width:115px">Back to Email</a>
-        </div>
+        </div>            
     </div>
 </form>
 

@@ -53,7 +53,7 @@ namespace SAC_Web_Application.Controllers
         }
         public IActionResult Admin()
         {
-            ViewData["Message"] = "This is the admin home page";
+            ViewData["Message"] = "Administration Home Page";
 
             return View();
         }

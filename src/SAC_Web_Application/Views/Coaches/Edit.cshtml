@@ -3,12 +3,9 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h2>Edit</h2>
-
+<h2>Update @ViewData["coachName"]'s Details</h2>
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Coaches</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="CoachID" />
@@ -49,15 +46,12 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

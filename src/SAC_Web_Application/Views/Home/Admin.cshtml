@@ -2,28 +2,28 @@
 @{
     ViewData["Title"] = "Admin";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+
+<h2>@ViewData["Message"]</h2>
 
 <div>
     <br />
-    <a asp-area="" asp-controller="Coaches" asp-action="Index" class="btn btn-primary btn-xs" style="width:130px">Coach Management</a>
+    <a asp-area="" asp-controller="Members" asp-action="Index" class="btn btn-primary btn-xs" style="width:130px">Members Details</a>
     <br />
-    <p>All necessary information on all coaches </p>
+    <p class="text-capitalize">List of all members with search facility</p>
     <br />
     <a asp-area="" asp-controller="Events" asp-action="Index" class="btn btn-primary btn-xs" style="width:130px">Event Management</a>
     <br />
-    <p>All necessary information on all events </p>
+    <p class="text-capitalize">information on all events </p>
+    <br />
+    <a asp-area="" asp-controller="Coaches" asp-action="Index" class="btn btn-primary btn-xs" style="width:130px">Coach Management</a>
+    <br />
+    <p class="text-capitalize">information on all coaches </p>
     <br />
     <a asp-area="" asp-controller="GroupEmail" asp-action="GroupEmail" class="btn btn-primary btn-xs" style="width:130px">Group Email</a>
     <br />
-    <p>E-mail different groups of memebers</p>
+    <p class="text-capitalize">E-mail different groups of members</p>
     <br />
     <a asp-area="" asp-controller="GroupSMS" asp-action="GroupSMS" class="btn btn-primary btn-xs" style="width:130px">Group SMS</a>
     <br />
-    <p>SMS different groups of memebers</p>
-    <br/>
-    <a asp-area="" asp-controller="Members" asp-action="Index" class="btn btn-primary btn-xs" style="width:130px">Members Details</a>    
-    <br />
-    List of all members with search facility 
+    <p class="text-capitalize">SMS different groups of members</p>    
 </div>

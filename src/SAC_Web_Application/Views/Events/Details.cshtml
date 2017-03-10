@@ -40,10 +40,6 @@
 @*if user is an admin show all members otherwise show all associcated members to account*@
 @if (User.IsInRole("Admin"))
 {
-    @*<div class="form-group">
-        <a asp-action="AllDetails" asp-route-id="@Model.EventID" class="btn btn-primary">See All Entries</a>
-    </div>*@
-
     if (allMembersAttending.Count != 0)
     {
         <div id="AllMembersAttending">

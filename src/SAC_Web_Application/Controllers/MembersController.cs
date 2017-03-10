@@ -86,7 +86,8 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
-
+            var memName = members.FirstName;
+            ViewData["memName"] = memName;
             return View(members);
         }
 
@@ -226,8 +227,7 @@ namespace SAC_Web_Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create2([Bind
             ("MemberID,Identifier,Address1,Address2,City,County,CountyOfBirth,DOB,DateRegistered,Email,FirstName,Gender,LastName,MembershipPaid,PhoneNumber,PostCode,Province,TeamName")]
-            Members members
-            /*, IServiceProvider serviceProvider*/) //for adding to member role
+            Members members)
         {
             // Query the database with values of drop down lists to get the text
             // Get the gender name and assign to member
@@ -269,9 +269,6 @@ namespace SAC_Web_Application.Controllers
             members.Province = memberList.ElementAt(0).Province;            
             members.MembershipPaid = false;
             members.DateRegistered = DateTime.Now;
-            
-            //for adding to member role
-            //var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             if (ModelState.IsValid)
             {
@@ -350,6 +347,8 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
+            var memName = members.FirstName;
+            ViewData["memName"] = memName;
             return View(members);
         }
 
@@ -413,9 +412,13 @@ namespace SAC_Web_Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var members = await _context.Members.SingleOrDefaultAsync(m => m.MemberID == id);
-            _context.Members.Remove(members);
+            var member = await _context.Members.SingleOrDefaultAsync(m => m.MemberID == id);
+            string memberEmail = member.Email;
+            _context.Members.Remove(member);
             await _context.SaveChangesAsync();
+            ApplicationUser user = await _userManager.FindByEmailAsync(memberEmail);
+            await _userManager.DeleteAsync(user);
+            await RemoveFromMemberRole(memberEmail);
             return RedirectToAction("Index");
         }
 
