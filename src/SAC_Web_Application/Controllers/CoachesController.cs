@@ -82,6 +82,10 @@ namespace SAC_Web_Application.Controllers
         // GET: Coaches/Create
         public IActionResult Create()
         {
+            // retrieve data for drop down lists
+            var days = _context.Days.Select(d => new { Id = d.DayID, Value = d.DayName });
+            ViewData["Days"] = new SelectList(days, "Id", "Value");
+
             return View();
         }
 
@@ -94,6 +98,11 @@ namespace SAC_Web_Application.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Query the database with values of drop down lists to get the text
+                // Get the day name and assign to coach
+                int dayId = Convert.ToInt32(coaches.Availability);
+                var day = _context.Days.Where(d => d.DayID == dayId).First();
+                coaches.Availability = day.DayName;
                 _context.Add(coaches);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -114,6 +123,11 @@ namespace SAC_Web_Application.Controllers
             {
                 return NotFound();
             }
+
+            // retrieve data for drop down lists
+            var days = _context.Days.Select(d => new { Id = d.DayID, Value = d.DayName });
+            ViewData["Days"] = new SelectList(days, "Id", "Value");
+
             var coachName = coaches.FirstName;
             ViewData["coachName"] = coachName;
             return View(coaches);
@@ -135,6 +149,12 @@ namespace SAC_Web_Application.Controllers
             {
                 try
                 {
+                    // Query the database with values of drop down lists to get the text
+                    // Get the day name and assign to coach
+                    int dayId = Convert.ToInt32(coaches.Availability);
+                    var day = _context.Days.Where(d => d.DayID == dayId).First();
+                    coaches.Availability = day.DayName;
+
                     _context.Update(coaches);
                     await _context.SaveChangesAsync();
                 }

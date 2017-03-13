@@ -78,6 +78,7 @@ namespace SAC_Web_Application.Models.MembersViewModels
 
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression("^(08[2-9]\\d{7})", ErrorMessage = "Invalid phone number")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }       
 

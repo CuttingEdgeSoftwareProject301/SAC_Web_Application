@@ -19,6 +19,7 @@ namespace SAC_Web_Application.Models.ClubModel
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
+        [RegularExpression("^(08[2-9]\\d{7})", ErrorMessage = "Invalid phone number")]
         [Display(Name = "Phone Number")]
         public string ContactNumber { get; set; }
         [Required]
