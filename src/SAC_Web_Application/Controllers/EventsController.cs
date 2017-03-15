@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using SAC_Web_Application.Models.ClubModel;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAC_Web_Application.Controllers
 {
+    [Authorize(Roles = "Admin,Member")]
     public class EventsController : Controller
     {
         private readonly ClubContext _context;

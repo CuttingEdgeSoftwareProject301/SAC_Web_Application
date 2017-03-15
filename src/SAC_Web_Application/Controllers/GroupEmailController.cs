@@ -7,9 +7,11 @@ using SAC_Web_Application.Models.GroupEmailModel;
 using SAC_Web_Application.Services;
 using SAC_Web_Application.Models.ClubModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAC_Web_Application.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GroupEmailController : Controller
     {
         private ClubContext _context;

@@ -11,9 +11,11 @@ using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
 using SAC_Web_Application.Models.GroupSMSModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAC_Web_Application.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GroupSMSController : Controller
     {
         private ISmsSender _smsSender;

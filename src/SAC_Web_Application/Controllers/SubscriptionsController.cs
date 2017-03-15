@@ -177,8 +177,7 @@ namespace SAC_Web_Application.Controllers
 
                 ViewData["Message"] = string.Format("Paypal Reference {0}", TransactionID);
                 ViewData["Message2"] = string.Format("Amount Paid ${0:c}", amount);
-            }
-            //return RedirectToAction("Index", "Members");
+            }            
             return View();
         }        
 
@@ -207,6 +206,7 @@ namespace SAC_Web_Application.Controllers
                 _context.Add(memPay);
                 _context.SaveChanges();
             }
+            HttpContext.Session.Remove("memberList");
         }
 
         private List<Members> GetAssociatedMembers()

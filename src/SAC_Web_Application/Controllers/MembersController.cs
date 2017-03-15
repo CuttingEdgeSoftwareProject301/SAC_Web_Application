@@ -15,10 +15,12 @@ using SAC_Web_Application.Models.MembersViewModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using SAC_Web_Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 //Members Controller
 namespace SAC_Web_Application.Controllers
 {
+    [Authorize(Roles = "Admin,Member")]
     public class MembersController : Controller
     {
         private ClubContext _context;

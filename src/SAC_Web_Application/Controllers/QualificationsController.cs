@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SAC_Web_Application.Models.ClubModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAC_Web_Application.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QualificationsController : Controller
     {
         private readonly ClubContext _context;

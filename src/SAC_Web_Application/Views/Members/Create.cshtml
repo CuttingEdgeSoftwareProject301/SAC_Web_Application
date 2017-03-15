@@ -118,17 +118,14 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Submit" class="btn btn-success" />
+                @if (User.IsInRole("Admin"))
+                {<a asp-action="Index" class="btn btn-primary">Back</a> }
             </div>
         </div>
         
     </div>
 </form>
-@if (User.IsInRole("Admin"))
-{
-    <div>
-        <a asp-action="Index" class="btn btn-xs btn-warning">Member List</a>
-    </div>
-}
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
