@@ -52,7 +52,7 @@ namespace SAC_Web_Application.Controllers
 
             return View();
         }
-        [Authorize("Admin")]
+        
         public IActionResult Admin()
         {
             ViewData["Message"] = "Administration Home Page";
