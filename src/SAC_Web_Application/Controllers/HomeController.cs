@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SAC_Web_Application.Controllers
 {
@@ -51,6 +52,7 @@ namespace SAC_Web_Application.Controllers
 
             return View();
         }
+        [Authorize("Admin")]
         public IActionResult Admin()
         {
             ViewData["Message"] = "Administration Home Page";
