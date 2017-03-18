@@ -34,6 +34,7 @@ namespace SAC_Web_Application.Controllers
             _emailSender = emailSender;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Members
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
