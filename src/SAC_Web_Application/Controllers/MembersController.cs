@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Authorization;
 //Members Controller
 namespace SAC_Web_Application.Controllers
 {
-    [Authorize(Roles = "Admin,Member")]
+    //[Authorize(Roles = "Admin,Member")]
     public class MembersController : Controller
     {
         private ClubContext _context;
@@ -34,7 +34,7 @@ namespace SAC_Web_Application.Controllers
             _emailSender = emailSender;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         // GET: Members
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -95,6 +95,7 @@ namespace SAC_Web_Application.Controllers
         }
 
         // GET: Members/Create
+        
         public IActionResult Create(int? subId)
         {
             if (subId != null)
